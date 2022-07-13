@@ -10,8 +10,8 @@ class TableViewController: UITableViewController, UISearchBarDelegate {
     
     var result: Model?
     
+    
     var filteredData = [String]()
-    var isSearchin = false
     
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -23,6 +23,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate {
         tableView.dataSource = self
     
        parseJSON()
+        
         
     }
         func parseJSON() {
