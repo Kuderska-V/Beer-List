@@ -9,7 +9,6 @@ import UIKit
 
 class RandomViewController: UIViewController {
 
-
     @IBOutlet weak var imageRandom: UIImageView!
     @IBOutlet weak var nameRandom: UILabel!
     @IBOutlet weak var taglineRandom: UILabel!

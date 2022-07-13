@@ -9,38 +9,21 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-    
     @IBOutlet weak var imageBeer: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var yearLabel: UILabel!
     @IBOutlet weak var taglineLabel: UILabel!
     @IBOutlet weak var descriptionBeer: UITextView!
     
-    @IBOutlet weak var buttonOutlet: UIButton!
-    
-    @IBAction func pressButton(_ sender: UIButton) {
-        
-    }
-    
-   // var beerItem: ModelItem!
+    var beerItem: ModelItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        title = "Beer Details"
-        
-//        let beer = beerItem.image_url
-//        if let imageURL = URL(string: beer) {
-//            if let data = try? Data(contentsOf: imageURL) {
-//                imageBeer.image = UIImage(data: data)
-//            }
-//        }
+        title = beerItem.name
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(addTapped))
+    }
     
-//          nameLabel.text = beerItem.name
-//        yearLabel.text = "Since:\(beerItem.first_brewed)"
-//        taglineLabel.text = beerItem.tagline
-//        descriptionBeer.text = beerItem.description
-       
-    
+    @objc func addTapped() {
+        print("add")
     }
 }

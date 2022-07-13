@@ -8,67 +8,47 @@ import UIKit
 
 class TableViewController: UITableViewController, UISearchBarDelegate {
     
-    var result: Model?
-    
-    
-    var filteredData = [String]()
+    var beers: [ModelItem] = []
+    var filteredBeers: [ModelItem] = []
     
     @IBOutlet weak var searchBar: UISearchBar!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         searchBar.delegate = self
         tableView.dataSource = self
-    
-       parseJSON()
-        
-        
+        parseJSON()
     }
-        func parseJSON() {
         
+    func parseJSON() {
         guard let path = Bundle.main.path(forResource: "data", ofType: "json") else { return }
         let url = URL(fileURLWithPath: path)
         do {
             let jsonData = try Data(contentsOf: url)
-            result = try JSONDecoder().decode(Model.self, from: jsonData)
+            beers = try JSONDecoder().decode(Model.self, from: jsonData).data
+            filteredBeers = beers
         } catch {
             print("Error: \(error)")
-            }
-
         }
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let result = result {
-            return result.data.count
-        }
-            return 0
+        return filteredBeers.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? BeerTableViewCell else {
             fatalError()
         }
-        
-        let model = result?.data[indexPath.row]
-        cell.name.text = model?.name
-        cell.year.text = model?.first_brewed
-        cell.imageBeer.image = UIImage(named: model!.image_url)
-        
-        if let imageURL = URL(string: model!.image_url) {
-            if let data = try? Data(contentsOf: imageURL) {
-                cell.imageBeer.image = UIImage(data: data)
-            }
-        }
+        let beer = filteredBeers[indexPath.row]
+        cell.name.text = beer.name
+        cell.year.text = beer.first_brewed
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
-           
-            //let model = result?.data
+            vc.beerItem = filteredBeers[indexPath.row]
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -76,34 +56,11 @@ class TableViewController: UITableViewController, UISearchBarDelegate {
     // MARK: Search Bar Config
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-
-
-//        for item in data {
-//            if item.name.contains(searchText) {
-//                filteredData.append(item)
-//            }
-//        }
-//
-//        self.tableView.reloadData()
-        
-        
-//        if searchText == "" {
-//            data = result.data!
-//            self.tableView.reloadData()
-//
-//        } else {
-//            filteredData = result.filter({$0.name.contains(searchText)})
-//            self.tableView.reloadData()
-//        }
-
-//
-//        if isSearchin {
-//            return filteredData.count
-//        } else {
-//            return result
-//        }
-//
-        
+        if searchText.isEmpty {
+            filteredBeers = beers
+        } else {
+            filteredBeers = beers.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+        }
+        tableView.reloadData()
     }
-
 }

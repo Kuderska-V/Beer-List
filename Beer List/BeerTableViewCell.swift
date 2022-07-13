@@ -9,16 +9,10 @@ import UIKit
 
 class BeerTableViewCell: UITableViewCell {
     
-    @IBOutlet var imageBeer: UIImageView! 
     @IBOutlet var name: UILabel!
     @IBOutlet var year: UILabel!
     
-
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        
-        
     }
-    
 }
