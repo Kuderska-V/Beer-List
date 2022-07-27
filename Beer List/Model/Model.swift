@@ -12,6 +12,7 @@ struct Model: Codable {
 }
 
 struct ModelItem: Codable {
+    var id: Int
     var name: String
     var tagline: String
     var first_brewed: String

@@ -15,7 +15,7 @@ class RandomViewController: UIViewController {
     @IBOutlet weak var yearRandom: UILabel!
     @IBOutlet weak var descriptionRandom: UITextView!
     
-    var randomBeer: [ModelItem] = []
+    var randomBeers: [ModelItem] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,14 +32,14 @@ class RandomViewController: UIViewController {
         let url = URL(fileURLWithPath: path)
         do {
             let jsonData = try Data(contentsOf: url)
-            randomBeer = try JSONDecoder().decode(Model.self, from: jsonData).data
+            randomBeers = try JSONDecoder().decode(Model.self, from: jsonData).data
         } catch {
             print("Error: \(error)")
         }
     }
         
     @IBAction func tapRandomButton(_ sender: Any) {
-        let beer = randomBeer.randomElement()
+        let beer = randomBeers.randomElement()
         nameRandom.isHidden = false
         nameRandom.text = beer?.name
         yearRandom.isHidden = false
