@@ -5,6 +5,7 @@
 //  Created by Vitalina Nazaruk on 09.07.2022.
 //
 import UIKit
+import Kingfisher
 
 class TableViewController: UITableViewController, UISearchBarDelegate {
     
@@ -17,19 +18,25 @@ class TableViewController: UITableViewController, UISearchBarDelegate {
         super.viewDidLoad()
         searchBar.delegate = self
         tableView.dataSource = self
-        parseJSON()
+        fetchData()
     }
-        
-    func parseJSON() {
-        guard let path = Bundle.main.path(forResource: "data", ofType: "json") else { return }
-        let url = URL(fileURLWithPath: path)
-        do {
-            let jsonData = try Data(contentsOf: url)
-            beers = try JSONDecoder().decode(Model.self, from: jsonData).data
-            filteredBeers = beers
-        } catch {
-            print("Error: \(error)")
+    
+    func fetchData() {
+        let url = URL(string: "https://api.punkapi.com/v2/beers")!
+        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+            guard let data = data else { return }
+            do {
+                self.beers = try JSONDecoder().decode([ModelItem].self, from: data)
+                self.filteredBeers = self.beers
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            } catch {
+                // present alert if error
+                //print("Error: \(error)")
+            }
         }
+        task.resume()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -37,12 +44,15 @@ class TableViewController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? BeerTableViewCell else {
             fatalError()
         }
         let beer = filteredBeers[indexPath.row]
         cell.name.text = beer.name
         cell.year.text = beer.first_brewed
+        let url = URL(string: beer.image_url)
+        cell.beerImage.kf.setImage(with: url)
         return cell
     }
     

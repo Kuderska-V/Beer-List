@@ -29,12 +29,6 @@ class RandomViewController: UIViewController {
         yearRandom.isHidden = true
         taglineRandom.isHidden = true
         descriptionRandom.isHidden = true
-        
-//        let favouriteImageName = favouritesManager.isFavourite(beerItem!.id) ? "star.fill" : "star"
-//    favoriteButtonItem = UIBarButtonItem(image: UIImage(systemName: favouriteImageName), style: .plain, target: self, action: #selector(toggleFavorite))
-
-        navigationItem.rightBarButtonItem = favoriteButtonItem
-        
     }
     
     func parseJSON() {
@@ -52,7 +46,10 @@ class RandomViewController: UIViewController {
 
         let beer = beers.randomElement()
         beerItem = beer!
-        //print(beerItem!)
+        
+        let favouriteImageName = favouritesManager.isFavourite(beerItem.id) ? "star.fill" : "star"
+        favoriteButtonItem = UIBarButtonItem(image: UIImage(systemName: favouriteImageName), style: .plain, target: self, action: #selector(toggleFavorite))
+        navigationItem.rightBarButtonItem = favoriteButtonItem
             
         nameRandom.isHidden = false
         nameRandom.text = beer!.name
@@ -62,9 +59,6 @@ class RandomViewController: UIViewController {
         taglineRandom.text = beer!.tagline
         descriptionRandom.isHidden = false
         descriptionRandom.text = beer!.description
-        
-        let favouriteImageName = favouritesManager.isFavourite(beerItem!.id) ? "star.fill" : "star"
-    favoriteButtonItem = UIBarButtonItem(image: UIImage(systemName: favouriteImageName), style: .plain, target: self, action: #selector(toggleFavorite))
     }
     
     @objc func toggleFavorite() {

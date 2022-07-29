@@ -229,27 +229,27 @@
                         </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="XbX-36-rym" customClass="BeerTableViewCell" customModule="Beer_List" customModuleProvider="target">
-                                <rect key="frame" x="20" y="93.5" width="374" height="61"/>
+                                <rect key="frame" x="20" y="93.5" width="374" height="60.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XbX-36-rym" id="Wsd-LF-cOZ">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="61"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="60.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Clr-HQ-x9a">
-                                            <rect key="frame" x="0.0" y="5" width="51" height="51"/>
-                                            <color key="backgroundColor" systemColor="systemRedColor"/>
+                                            <rect key="frame" x="0.0" y="5" width="50.5" height="50.5"/>
                                             <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="nbB-6C-cZK"/>
                                                 <constraint firstAttribute="width" secondItem="Clr-HQ-x9a" secondAttribute="height" multiplier="1:1" id="vjD-QB-8Em"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rqU-KF-wbw">
-                                            <rect key="frame" x="71" y="20" width="183" height="21"/>
+                                            <rect key="frame" x="70.5" y="20" width="183.5" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T71-32-Rnf">
-                                            <rect key="frame" x="274" y="20" width="100" height="21"/>
+                                            <rect key="frame" x="274" y="20" width="100" height="20.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="100" id="2EF-cd-tbV"/>
                                             </constraints>
@@ -272,6 +272,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="beerImage" destination="Clr-HQ-x9a" id="4d1-o6-qLL"/>
                                     <outlet property="name" destination="rqU-KF-wbw" id="iG7-MY-3Ak"/>
                                     <outlet property="year" destination="T71-32-Rnf" id="hO5-pF-5Vd"/>
                                 </connections>
@@ -395,9 +396,6 @@
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
