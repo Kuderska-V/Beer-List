@@ -15,16 +15,26 @@ class RandomViewController: UIViewController {
     @IBOutlet weak var yearRandom: UILabel!
     @IBOutlet weak var descriptionRandom: UITextView!
     
-    var randomBeers: [ModelItem] = []
+    var beerItem: ModelItem!
+    var beers: [ModelItem] = []
+    var favoriteButtonItem: UIBarButtonItem?
+    
+    let favouritesManager = FavouritesManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Random"
+        title = "Random Beer"
         parseJSON()
         nameRandom.isHidden = true
         yearRandom.isHidden = true
         taglineRandom.isHidden = true
         descriptionRandom.isHidden = true
+        
+//        let favouriteImageName = favouritesManager.isFavourite(beerItem!.id) ? "star.fill" : "star"
+//    favoriteButtonItem = UIBarButtonItem(image: UIImage(systemName: favouriteImageName), style: .plain, target: self, action: #selector(toggleFavorite))
+
+        navigationItem.rightBarButtonItem = favoriteButtonItem
+        
     }
     
     func parseJSON() {
@@ -32,22 +42,39 @@ class RandomViewController: UIViewController {
         let url = URL(fileURLWithPath: path)
         do {
             let jsonData = try Data(contentsOf: url)
-            randomBeers = try JSONDecoder().decode(Model.self, from: jsonData).data
+            beers = try JSONDecoder().decode(Model.self, from: jsonData).data
         } catch {
             print("Error: \(error)")
         }
     }
         
-    @IBAction func tapRandomButton(_ sender: Any) {
-        let beer = randomBeers.randomElement()
+    @IBAction func tapRandomButton(_ sender: UIButton) {
+
+        let beer = beers.randomElement()
+        beerItem = beer!
+        //print(beerItem!)
+            
         nameRandom.isHidden = false
-        nameRandom.text = beer?.name
+        nameRandom.text = beer!.name
         yearRandom.isHidden = false
-        yearRandom.text = beer?.first_brewed
+        yearRandom.text = beer!.first_brewed
         taglineRandom.isHidden = false
-        taglineRandom.text = beer?.tagline
+        taglineRandom.text = beer!.tagline
         descriptionRandom.isHidden = false
-        descriptionRandom.text = beer?.description
+        descriptionRandom.text = beer!.description
+        
+        let favouriteImageName = favouritesManager.isFavourite(beerItem!.id) ? "star.fill" : "star"
+    favoriteButtonItem = UIBarButtonItem(image: UIImage(systemName: favouriteImageName), style: .plain, target: self, action: #selector(toggleFavorite))
+    }
+    
+    @objc func toggleFavorite() {
+        if favouritesManager.isFavourite(beerItem.id) {
+            favouritesManager.removeFromFavourites(beerItem.id)
+            favoriteButtonItem?.image = UIImage(systemName: "star")
+        } else {
+            favouritesManager.addToFavourites(beerItem)
+            favoriteButtonItem?.image = UIImage(systemName: "star.fill")
+        }
     }
 }
         

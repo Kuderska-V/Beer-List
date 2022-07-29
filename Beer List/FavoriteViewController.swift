@@ -22,13 +22,18 @@ class FavoriteViewController: UITableViewController {
         beers = favouritesManager.beers
         tableView.reloadData()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        beers = favouritesManager.beers
+        tableView.reloadData()
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return beers.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? FavoriteTableViewCell
         let beer = beers[indexPath.row]
         cell?.name.text = beer.name
@@ -37,5 +42,9 @@ class FavoriteViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
+            vc.beerItem = beers[indexPath.row]
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }
