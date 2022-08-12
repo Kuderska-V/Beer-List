@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class RandomViewController: UIViewController {
 
@@ -24,41 +25,53 @@ class RandomViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Random Beer"
-        parseJSON()
+        
+        imageRandom.isHidden = true
         nameRandom.isHidden = true
         yearRandom.isHidden = true
         taglineRandom.isHidden = true
         descriptionRandom.isHidden = true
+        fetchData()
     }
     
-    func parseJSON() {
-        guard let path = Bundle.main.path(forResource: "data", ofType: "json") else { return }
-        let url = URL(fileURLWithPath: path)
-        do {
-            let jsonData = try Data(contentsOf: url)
-            beers = try JSONDecoder().decode(Model.self, from: jsonData).data
-        } catch {
-            print("Error: \(error)")
+    func fetchData() {
+        let url = URL(string: "https://api.punkapi.com/v2/beers/random")!
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let data = data else { return }
+            do {
+                self.beers = try JSONDecoder().decode([ModelItem].self, from: data)
+            } catch {
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Something went wrong", message: error.localizedDescription, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                }
+            }
         }
+        task.resume()
     }
         
     @IBAction func tapRandomButton(_ sender: UIButton) {
-
+        fetchData()
         let beer = beers.randomElement()
         beerItem = beer!
-        
+        title = beerItem.name
         let favouriteImageName = favouritesManager.isFavourite(beerItem.id) ? "star.fill" : "star"
         favoriteButtonItem = UIBarButtonItem(image: UIImage(systemName: favouriteImageName), style: .plain, target: self, action: #selector(toggleFavorite))
         navigationItem.rightBarButtonItem = favoriteButtonItem
-            
-        nameRandom.isHidden = false
-        nameRandom.text = beer!.name
-        yearRandom.isHidden = false
-        yearRandom.text = beer!.first_brewed
-        taglineRandom.isHidden = false
-        taglineRandom.text = beer!.tagline
-        descriptionRandom.isHidden = false
-        descriptionRandom.text = beer!.description
+        
+        self.imageRandom.isHidden = false
+        self.nameRandom.isHidden = false
+        self.yearRandom.isHidden = false
+        self.taglineRandom.isHidden = false
+        self.descriptionRandom.isHidden = false
+        let url = URL(string: beer!.image_url)
+        self.imageRandom.kf.setImage(with: url!)
+        self.nameRandom.text = beer!.name
+        self.yearRandom.text = beer!.first_brewed
+        self.taglineRandom.text = beer!.tagline
+        self.descriptionRandom.text = beer!.description
+
     }
     
     @objc func toggleFavorite() {

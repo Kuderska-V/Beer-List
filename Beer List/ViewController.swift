@@ -32,8 +32,9 @@ class TableViewController: UITableViewController, UISearchBarDelegate {
                     self.tableView.reloadData()
                 }
             } catch {
-                // present alert if error
-                //print("Error: \(error)")
+                let alert = UIAlertController(title: "Something went wrong", message: error.localizedDescription, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true)
             }
         }
         task.resume()

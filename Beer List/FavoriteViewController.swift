@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class FavoriteViewController: UITableViewController {
 
@@ -36,6 +37,8 @@ class FavoriteViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? FavoriteTableViewCell
         let beer = beers[indexPath.row]
+        let url = URL(string: beer.image_url)
+        cell?.imageFav.kf.setImage(with: url)
         cell?.name.text = beer.name
         cell?.year.text = beer.first_brewed
         return cell!

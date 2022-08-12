@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		69BB62E2287F029A00FC41A5 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 69BB62E0287F029900FC41A5 /* data.json */; };
 		69BB62E3287F029A00FC41A5 /* file.json in Resources */ = {isa = PBXBuildFile; fileRef = 69BB62E1287F029900FC41A5 /* file.json */; };
+		69C107E928A271220098ED04 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 69C107E728A271220098ED04 /* CoreData.xcdatamodeld */; };
+		69C107EC28A2EA770098ED04 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C107EB28A2EA770098ED04 /* CoreDataStack.swift */; };
 		69E1680D28849C0C00FB5ACE /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69E1680C28849C0B00FB5ACE /* FavoriteViewController.swift */; };
 		69E1680F2884B99300FB5ACE /* FavoriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69E1680E2884B99300FB5ACE /* FavoriteTableViewCell.swift */; };
 		69EC12D62879C92500C7D947 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EC12D52879C92500C7D947 /* AppDelegate.swift */; };
@@ -28,6 +30,8 @@
 /* Begin PBXFileReference section */
 		69BB62E0287F029900FC41A5 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		69BB62E1287F029900FC41A5 /* file.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = file.json; sourceTree = "<group>"; };
+		69C107E828A271220098ED04 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
+		69C107EB28A2EA770098ED04 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		69E1680C28849C0B00FB5ACE /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		69E1680E2884B99300FB5ACE /* FavoriteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewCell.swift; sourceTree = "<group>"; };
 		69EC12D22879C92500C7D947 /* Beer List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Beer List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,6 +69,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		69C107EA28A2EA410098ED04 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				69C107EB28A2EA770098ED04 /* CoreDataStack.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		69EC12C92879C92500C7D947 = {
 			isa = PBXGroup;
 			children = (
@@ -96,10 +108,12 @@
 				69E1680C28849C0B00FB5ACE /* FavoriteViewController.swift */,
 				69E1680E2884B99300FB5ACE /* FavoriteTableViewCell.swift */,
 				69BB62DD287EA9C400FC41A5 /* Model */,
+				69C107EA28A2EA410098ED04 /* CoreData */,
 				69EC12DB2879C92500C7D947 /* Main.storyboard */,
 				69EC12DE2879C92800C7D947 /* Assets.xcassets */,
 				69EC12E02879C92800C7D947 /* LaunchScreen.storyboard */,
 				69EC12E32879C92800C7D947 /* Info.plist */,
+				69C107E728A271220098ED04 /* CoreData.xcdatamodeld */,
 			);
 			path = "Beer List";
 			sourceTree = "<group>";
@@ -186,6 +200,8 @@
 				69EC12F02879D2CA00C7D947 /* Model.swift in Sources */,
 				EEA1B2D728913CF00052F4F1 /* FavouritesManager.swift in Sources */,
 				69EC12D62879C92500C7D947 /* AppDelegate.swift in Sources */,
+				69C107EC28A2EA770098ED04 /* CoreDataStack.swift in Sources */,
+				69C107E928A271220098ED04 /* CoreData.xcdatamodeld in Sources */,
 				69EC12D82879C92500C7D947 /* SceneDelegate.swift in Sources */,
 				69EC12FA287CCF9100C7D947 /* RandomViewController.swift in Sources */,
 				69E1680F2884B99300FB5ACE /* FavoriteTableViewCell.swift in Sources */,
@@ -429,6 +445,19 @@
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		69C107E728A271220098ED04 /* CoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				69C107E828A271220098ED04 /* CoreData.xcdatamodel */,
+			);
+			currentVersion = 69C107E828A271220098ED04 /* CoreData.xcdatamodel */;
+			path = CoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 69EC12CA2879C92500C7D947 /* Project object */;
 }

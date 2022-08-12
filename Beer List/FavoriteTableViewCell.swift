@@ -9,6 +9,7 @@ import UIKit
 
 class FavoriteTableViewCell: UITableViewCell {
 
+    @IBOutlet var imageFav: UIImageView!
     @IBOutlet var name: UILabel!
     @IBOutlet var year: UILabel!
     

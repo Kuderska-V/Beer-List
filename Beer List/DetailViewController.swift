@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Kingfisher
+import CoreData
 
 class DetailViewController: UIViewController {
 
@@ -18,11 +20,15 @@ class DetailViewController: UIViewController {
     var beerItem: ModelItem!
     var favoriteButtonItem: UIBarButtonItem?
     
+    var beer: [NSManagedObject] = []
+    
     let favouritesManager = FavouritesManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = beerItem.name
+        let url = URL(string: beerItem.image_url)
+        imageBeer.kf.setImage(with: url)
         nameLabel.text = beerItem.name
         yearLabel.text = beerItem.first_brewed
         taglineLabel.text = beerItem.tagline
