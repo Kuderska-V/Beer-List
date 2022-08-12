@@ -17,34 +17,41 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var taglineLabel: UILabel!
     @IBOutlet weak var descriptionBeer: UITextView!
     
-    var beerItem: ModelItem!
+    var beer: Beer!
     var favoriteButtonItem: UIBarButtonItem?
-    
-    var beer: [NSManagedObject] = []
-    
-    let favouritesManager = FavouritesManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = beerItem.name
-        let url = URL(string: beerItem.image_url)
+        title = beer.name
+        let url = URL(string: beer.image_url)
         imageBeer.kf.setImage(with: url)
-        nameLabel.text = beerItem.name
-        yearLabel.text = beerItem.first_brewed
-        taglineLabel.text = beerItem.tagline
-        descriptionBeer.text = beerItem.description
-        let favouriteImageName = favouritesManager.isFavourite(beerItem.id) ? "star.fill" : "star"
-        favoriteButtonItem = UIBarButtonItem(image: UIImage(systemName: favouriteImageName), style: .plain, target: self, action: #selector(toggleFavorite))
+        nameLabel.text = beer.name
+        yearLabel.text = beer.first_brewed
+        taglineLabel.text = ""
+        descriptionBeer.text = ""
+        // change image because of beer state
+        favoriteButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(toggleFavorite))
         navigationItem.rightBarButtonItem = favoriteButtonItem
     }
     
     @objc func toggleFavorite() {
-        if favouritesManager.isFavourite(beerItem.id) {
-            favouritesManager.removeFromFavourites(beerItem.id)
-            favoriteButtonItem?.image = UIImage(systemName: "star")
-        } else {
-            favouritesManager.addToFavourites(beerItem)
-            favoriteButtonItem?.image = UIImage(systemName: "star.fill")
+        // check if beer alrady store
+        // if yes, remove it from core data
+        // if no save()
+        save()
+    }
+    
+    func save() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Beer", in: managedContext)!
+        _ = Beer.toManagedObject(beer: beer, entity: entity, context: managedContext)
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
         }
     }
 }

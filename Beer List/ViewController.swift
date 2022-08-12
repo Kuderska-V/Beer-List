@@ -9,8 +9,8 @@ import Kingfisher
 
 class TableViewController: UITableViewController, UISearchBarDelegate {
     
-    var beers: [ModelItem] = []
-    var filteredBeers: [ModelItem] = []
+    var beers: [Beer] = []
+    var filteredBeers: [Beer] = []
     
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -26,7 +26,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate {
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
             guard let data = data else { return }
             do {
-                self.beers = try JSONDecoder().decode([ModelItem].self, from: data)
+                self.beers = try JSONDecoder().decode([Beer].self, from: data)
                 self.filteredBeers = self.beers
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -59,7 +59,7 @@ class TableViewController: UITableViewController, UISearchBarDelegate {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
-            vc.beerItem = filteredBeers[indexPath.row]
+            vc.beer = filteredBeers[indexPath.row]
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

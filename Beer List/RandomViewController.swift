@@ -20,8 +20,6 @@ class RandomViewController: UIViewController {
     var beers: [ModelItem] = []
     var favoriteButtonItem: UIBarButtonItem?
     
-    let favouritesManager = FavouritesManager.shared
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Random Beer"
@@ -56,8 +54,8 @@ class RandomViewController: UIViewController {
         let beer = beers.randomElement()
         beerItem = beer!
         title = beerItem.name
-        let favouriteImageName = favouritesManager.isFavourite(beerItem.id) ? "star.fill" : "star"
-        favoriteButtonItem = UIBarButtonItem(image: UIImage(systemName: favouriteImageName), style: .plain, target: self, action: #selector(toggleFavorite))
+        // check if beer alrady stored
+        favoriteButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(toggleFavorite))
         navigationItem.rightBarButtonItem = favoriteButtonItem
         
         self.imageRandom.isHidden = false
@@ -75,13 +73,9 @@ class RandomViewController: UIViewController {
     }
     
     @objc func toggleFavorite() {
-        if favouritesManager.isFavourite(beerItem.id) {
-            favouritesManager.removeFromFavourites(beerItem.id)
-            favoriteButtonItem?.image = UIImage(systemName: "star")
-        } else {
-            favouritesManager.addToFavourites(beerItem)
-            favoriteButtonItem?.image = UIImage(systemName: "star.fill")
-        }
+        // check if beer alrady store
+        // if yes, remove it from core data
+        // if no save()
     }
 }
         
