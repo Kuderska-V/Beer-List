@@ -17,8 +17,7 @@ struct ModelItem: Codable {
     var image_url: String
 }
 
-struct SingleBeer: Codable {
-    var id: Int
+struct BeerDetails: Codable {
     var tagline: String
     var description: String
 }
