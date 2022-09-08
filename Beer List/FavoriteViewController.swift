@@ -26,11 +26,15 @@ class FavoriteViewController: UITableViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Beer")
+        
+
         do {
           beers = try managedContext.fetch(fetchRequest)
+          
         } catch let error as NSError {
           print("Could not fetch. \(error), \(error.userInfo)")
         }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

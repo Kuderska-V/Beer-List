@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import CoreData
 
 class RandomViewController: UIViewController {
 
@@ -76,6 +77,7 @@ class RandomViewController: UIViewController {
         // check if beer alrady store
         // if yes, remove it from core data
         // if no save()
+        
     }
 }
         

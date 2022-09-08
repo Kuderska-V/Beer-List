@@ -8,10 +8,6 @@
 import Foundation
 import CoreData
 
-//struct Model: Codable {
-//    let data: [ModelItem]
-//}
-
 struct ModelItem: Codable {
     var id: Int
     var name: String
@@ -19,6 +15,12 @@ struct ModelItem: Codable {
     var first_brewed: String
     var description: String
     var image_url: String
+}
+
+struct SingleBeer: Codable {
+    var id: Int
+    var tagline: String
+    var description: String
 }
 
 struct Beer: Codable {
