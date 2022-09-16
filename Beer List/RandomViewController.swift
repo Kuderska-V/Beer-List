@@ -56,7 +56,7 @@ class RandomViewController: UIViewController {
         beerItem = beer!
         title = beerItem.name
         // check if beer alrady stored
-        favoriteButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(toggleFavorite))
+        favoriteButtonItem = UIBarButtonItem(image: UIImage(systemName: isAddedToFavourites() ? "star.fill" : "star"), style: .plain, target: self, action: #selector(toggleFavorite))
         navigationItem.rightBarButtonItem = favoriteButtonItem
         
         self.imageRandom.isHidden = false
@@ -74,10 +74,50 @@ class RandomViewController: UIViewController {
     }
     
     @objc func toggleFavorite() {
-        // check if beer alrady store
-        // if yes, remove it from core data
-        // if no save()
-        
+        if isAddedToFavourites() {
+            remove()
+        } else {
+            save()
+        }
+    }
+    
+    func isAddedToFavourites() -> Bool {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Beer")
+        fetchRequest.predicate = NSPredicate(format: "id == %d" , beerItem.id)
+        let count = try? managedContext.count(for: fetchRequest)
+        guard let count = count else { return false }
+        return count > 0
+    }
+    
+    func save() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Beer", in: managedContext)!
+        _ = ModelItem.toManagedObject(beer: beerItem, entity: entity, context: managedContext)
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+        navigationItem.rightBarButtonItem?.image = UIImage(systemName: "star.fill")
+    }
+    
+    func remove() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Beer")
+        fetchRequest.predicate = NSPredicate(format: "id == %d" , beerItem.id)
+        let beers = try? managedContext.fetch(fetchRequest)
+        guard let beers = beers else { return }
+        for beer in beers {
+            managedContext.delete(beer)
+        }
+        try? managedContext.save()
+        navigationItem.rightBarButtonItem?.image = UIImage(systemName: "star")
     }
 }
         
