@@ -17,28 +17,29 @@ class RandomViewController: UIViewController {
     @IBOutlet weak var yearRandom: UILabel!
     @IBOutlet weak var descriptionRandom: UITextView!
     
-    var beerItem: ModelItem!
-    var beers: [ModelItem] = []
+    var beer: Beer?
     var favoriteButtonItem: UIBarButtonItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Random Beer"
-        
         imageRandom.isHidden = true
         nameRandom.isHidden = true
         yearRandom.isHidden = true
         taglineRandom.isHidden = true
         descriptionRandom.isHidden = true
-        fetchData()
+        tapRandomButton(UIButton())
     }
     
-    func fetchData() {
+    func fetchRundomBeer(completion: @escaping (Beer?) -> Void) {
         let url = URL(string: "https://api.punkapi.com/v2/beers/random")!
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data else { return }
             do {
-                self.beers = try JSONDecoder().decode([ModelItem].self, from: data)
+                let beers = try JSONDecoder().decode([Beer].self, from: data)
+                DispatchQueue.main.async {
+                    completion(beers.first)
+                }
             } catch {
                 DispatchQueue.main.async {
                     let alert = UIAlertController(title: "Something went wrong", message: error.localizedDescription, preferredStyle: .alert)
@@ -51,26 +52,28 @@ class RandomViewController: UIViewController {
     }
         
     @IBAction func tapRandomButton(_ sender: UIButton) {
-        fetchData()
-        let beer = beers.randomElement()
-        beerItem = beer!
-        title = beerItem.name
-        // check if beer alrady stored
+        fetchRundomBeer { beer in
+            self.beer = beer
+            self.configureLayouts()
+        }
+    }
+    
+    func configureLayouts() {
+        guard let beer = beer else { return }
+        title = beer.name
         favoriteButtonItem = UIBarButtonItem(image: UIImage(systemName: isAddedToFavourites() ? "star.fill" : "star"), style: .plain, target: self, action: #selector(toggleFavorite))
         navigationItem.rightBarButtonItem = favoriteButtonItem
-        
-        self.imageRandom.isHidden = false
-        self.nameRandom.isHidden = false
-        self.yearRandom.isHidden = false
-        self.taglineRandom.isHidden = false
-        self.descriptionRandom.isHidden = false
-        let url = URL(string: beer!.image_url)
-        self.imageRandom.kf.setImage(with: url!)
-        self.nameRandom.text = beer!.name
-        self.yearRandom.text = beer!.first_brewed
-        self.taglineRandom.text = beer!.tagline
-        self.descriptionRandom.text = beer!.description
-
+        imageRandom.isHidden = false
+        nameRandom.isHidden = false
+        yearRandom.isHidden = false
+        taglineRandom.isHidden = false
+        descriptionRandom.isHidden = false
+        let url = URL(string: beer.image_url)
+        imageRandom.kf.setImage(with: url!)
+        nameRandom.text = beer.name
+        yearRandom.text = beer.first_brewed
+        taglineRandom.text = beer.tagline
+        descriptionRandom.text = beer.description
     }
     
     @objc func toggleFavorite() {
@@ -82,22 +85,24 @@ class RandomViewController: UIViewController {
     }
     
     func isAddedToFavourites() -> Bool {
+        guard let beer = beer else { return false }
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Beer")
-        fetchRequest.predicate = NSPredicate(format: "id == %d" , beerItem.id)
+        fetchRequest.predicate = NSPredicate(format: "id == %d" , beer.id)
         let count = try? managedContext.count(for: fetchRequest)
         guard let count = count else { return false }
         return count > 0
     }
     
     func save() {
+        guard let beer = beer else { return }
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
         let managedContext = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Beer", in: managedContext)!
-        _ = ModelItem.toManagedObject(beer: beerItem, entity: entity, context: managedContext)
+        Beer.toManagedObject(beer: beer, entity: entity, context: managedContext)
         do {
             try managedContext.save()
         } catch let error as NSError {
@@ -107,10 +112,11 @@ class RandomViewController: UIViewController {
     }
     
     func remove() {
+        guard let beer = beer else { return }
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Beer")
-        fetchRequest.predicate = NSPredicate(format: "id == %d" , beerItem.id)
+        fetchRequest.predicate = NSPredicate(format: "id == %d" , beer.id)
         let beers = try? managedContext.fetch(fetchRequest)
         guard let beers = beers else { return }
         for beer in beers {

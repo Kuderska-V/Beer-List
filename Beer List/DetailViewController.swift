@@ -18,7 +18,6 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var descriptionBeer: UITextView!
     
     var beer: Beer!
-    var beerDetails: BeerDetails?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,8 +36,8 @@ class DetailViewController: UIViewController {
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
             guard let data = data else { return }
             do {
-                let details = try JSONDecoder().decode([BeerDetails].self, from: data)
-                self.beerDetails = details.first
+                let beers = try JSONDecoder().decode([Beer].self, from: data)
+                self.beer = beers.first
                 DispatchQueue.main.async {
                     self.displayDetails()
                 }
@@ -54,8 +53,8 @@ class DetailViewController: UIViewController {
     }
     
     func displayDetails() {
-        taglineLabel.text = beerDetails?.tagline
-        descriptionBeer.text = beerDetails?.description
+        taglineLabel.text = beer?.tagline
+        descriptionBeer.text = beer?.description
     }
 
     @objc func toggleFavorite() {
