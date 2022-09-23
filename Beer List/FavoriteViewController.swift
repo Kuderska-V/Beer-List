@@ -11,7 +11,7 @@ import CoreData
 
 class FavoriteViewController: UITableViewController {
 
-    var beers: [NSManagedObject] = []
+    var beers: [Beer] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,15 +26,14 @@ class FavoriteViewController: UITableViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Beer")
-        
-
         do {
-          beers = try managedContext.fetch(fetchRequest)
-          
+            let beerManagedObjects = try managedContext.fetch(fetchRequest)
+            beers = beerManagedObjects.map { Beer.from($0) }.sorted {
+                return $0.createdAt?.timeIntervalSince1970 ?? 0.0 > $1.createdAt?.timeIntervalSince1970 ?? 0.0
+            }
         } catch let error as NSError {
-          print("Could not fetch. \(error), \(error.userInfo)")
+            print("Could not fetch. \(error), \(error.userInfo)")
         }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,8 +48,7 @@ class FavoriteViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? FavoriteTableViewCell
-        let beerManagedObject = beers[indexPath.row]
-        let beer = Beer.from(beerManagedObject)
+        let beer = beers[indexPath.row]
         let url = URL(string: beer.image_url)
         cell?.imageFav.kf.setImage(with: url)
         cell?.name.text = beer.name
@@ -60,8 +58,7 @@ class FavoriteViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
-            let beerManagedObject = beers[indexPath.row]
-            vc.beer = Beer.from(beerManagedObject)
+            vc.beer = beers[indexPath.row]
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

@@ -15,13 +15,15 @@ struct Beer: Codable {
     var image_url: String
     var tagline: String
     var description: String
+    var createdAt: Date?
     
     static func from(_ object: NSManagedObject) -> Beer {
         let id = object.value(forKeyPath: "id") as! Int
         let name =  object.value(forKeyPath: "name") as? String
         let year = object.value(forKeyPath: "year") as? String
         let imageURL = object.value(forKeyPath: "image") as? String
-        return Beer(id: id, name: name ?? "Unknown", first_brewed: year ?? "Unknown", image_url: imageURL ?? "", tagline: "", description: "")
+        let createdAt = object.value(forKeyPath: "created_at") as? Date
+        return Beer(id: id, name: name ?? "Unknown", first_brewed: year ?? "Unknown", image_url: imageURL ?? "", tagline: "", description: "", createdAt: createdAt)
     }
     
     @discardableResult static func toManagedObject(beer: Beer, entity: NSEntityDescription, context: NSManagedObjectContext) -> NSManagedObject {
