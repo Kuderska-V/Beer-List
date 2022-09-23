@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		69BB62E2287F029A00FC41A5 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 69BB62E0287F029900FC41A5 /* data.json */; };
-		69BB62E3287F029A00FC41A5 /* file.json in Resources */ = {isa = PBXBuildFile; fileRef = 69BB62E1287F029900FC41A5 /* file.json */; };
 		69C107E928A271220098ED04 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 69C107E728A271220098ED04 /* CoreData.xcdatamodeld */; };
 		69E1680D28849C0C00FB5ACE /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69E1680C28849C0B00FB5ACE /* FavoriteViewController.swift */; };
 		69E1680F2884B99300FB5ACE /* FavoriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69E1680E2884B99300FB5ACE /* FavoriteTableViewCell.swift */; };
@@ -26,8 +24,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		69BB62E0287F029900FC41A5 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
-		69BB62E1287F029900FC41A5 /* file.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = file.json; sourceTree = "<group>"; };
 		69C107E828A271220098ED04 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
 		69E1680C28849C0B00FB5ACE /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		69E1680E2884B99300FB5ACE /* FavoriteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTableViewCell.swift; sourceTree = "<group>"; };
@@ -68,8 +64,6 @@
 		69EC12C92879C92500C7D947 = {
 			isa = PBXGroup;
 			children = (
-				69BB62E0287F029900FC41A5 /* data.json */,
-				69BB62E1287F029900FC41A5 /* file.json */,
 				69EC12D42879C92500C7D947 /* Beer List */,
 				69EC12D32879C92500C7D947 /* Products */,
 			);
@@ -170,9 +164,7 @@
 			files = (
 				69EC12E22879C92800C7D947 /* LaunchScreen.storyboard in Resources */,
 				69EC12DF2879C92800C7D947 /* Assets.xcassets in Resources */,
-				69BB62E3287F029A00FC41A5 /* file.json in Resources */,
 				69EC12DD2879C92500C7D947 /* Main.storyboard in Resources */,
-				69BB62E2287F029A00FC41A5 /* data.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

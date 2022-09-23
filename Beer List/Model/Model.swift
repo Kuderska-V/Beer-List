@@ -30,6 +30,7 @@ struct Beer: Codable {
         beerManagedObject.setValue(beer.name, forKeyPath: "name")
         beerManagedObject.setValue(beer.first_brewed, forKeyPath: "year")
         beerManagedObject.setValue(beer.image_url, forKeyPath: "image")
+        beerManagedObject.setValue(Date(), forKeyPath: "created_at")
         return beerManagedObject
     }
 }
