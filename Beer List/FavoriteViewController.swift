@@ -18,6 +18,21 @@ class FavoriteViewController: UITableViewController {
         title = "Favorites"
     }
     
+    @IBAction func tapFilterButton(_ sender: UIBarButtonItem) {
+        let ac = UIAlertController(title: "SORT BY DATE", message: nil, preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "Ascending", style: .default, handler: { (action) -> Void in
+            self.beers.sort(by: { $0.createdAt! > $1.createdAt!})
+            print(self.beers)
+        }))
+        ac.addAction(UIAlertAction(title: "Descending", style: .default, handler: { (action) -> Void in
+            self.beers.sort( by: {$0.createdAt! < $1.createdAt!})
+            print(self.beers)
+        }))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+        self.present(ac, animated: true, completion: nil)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
@@ -29,8 +44,10 @@ class FavoriteViewController: UITableViewController {
         do {
             let beerManagedObjects = try managedContext.fetch(fetchRequest)
             beers = beerManagedObjects.map { Beer.from($0) }.sorted {
+                
                 return $0.createdAt?.timeIntervalSince1970 ?? 0.0 > $1.createdAt?.timeIntervalSince1970 ?? 0.0
             }
+            
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
