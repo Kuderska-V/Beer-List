@@ -339,7 +339,7 @@
                     <navigationItem key="navigationItem" id="wLC-H8-gaE"/>
                     <connections>
                         <outlet property="email" destination="Uiw-Kk-dlM" id="cgC-El-itl"/>
-                        <outlet property="firstName" destination="Ab2-Gu-ciU" id="ihD-Nb-kfP"/>
+                        <outlet property="firstName" destination="Ab2-Gu-ciU" id="3Yf-SA-Hah"/>
                         <outlet property="lastName" destination="pIo-6F-UO9" id="Yla-Zi-03j"/>
                         <outlet property="password" destination="fu1-D1-utG" id="Ufe-E4-xiN"/>
                         <outlet property="passwordConfirmation" destination="PpQ-OO-Twi" id="WoD-aK-AxH"/>
