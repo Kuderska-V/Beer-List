@@ -23,6 +23,8 @@
 		69EC12F6287B5FC900C7D947 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EC12F5287B5FC900C7D947 /* DetailViewController.swift */; };
 		69EC12FA287CCF9100C7D947 /* RandomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EC12F9287CCF9100C7D947 /* RandomViewController.swift */; };
 		EE768144289409B6000FF056 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = EE768143289409B6000FF056 /* Kingfisher */; };
+		EE945B322902A7A6007DE106 /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE945B312902A7A6007DE106 /* Consts.swift */; };
+		EE945B342902A90E007DE106 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE945B332902A90E007DE106 /* Validator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,8 @@
 		69EC12EF2879D2CA00C7D947 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		69EC12F5287B5FC900C7D947 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		69EC12F9287CCF9100C7D947 /* RandomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomViewController.swift; sourceTree = "<group>"; };
+		EE945B312902A7A6007DE106 /* Consts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
+		EE945B332902A90E007DE106 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +88,8 @@
 		69EC12D42879C92500C7D947 /* Beer List */ = {
 			isa = PBXGroup;
 			children = (
+				EE945B332902A90E007DE106 /* Validator.swift */,
+				EE945B312902A7A6007DE106 /* Consts.swift */,
 				69EC12D52879C92500C7D947 /* AppDelegate.swift */,
 				69EC12D72879C92500C7D947 /* SceneDelegate.swift */,
 				69EC12ED2879CF7D00C7D947 /* ViewController.swift */,
@@ -184,6 +190,8 @@
 				69DF36D428E9F413000F48BD /* LoginViewController.swift in Sources */,
 				69EC12F02879D2CA00C7D947 /* Model.swift in Sources */,
 				69EC12D62879C92500C7D947 /* AppDelegate.swift in Sources */,
+				EE945B322902A7A6007DE106 /* Consts.swift in Sources */,
+				EE945B342902A90E007DE106 /* Validator.swift in Sources */,
 				69C107E928A271220098ED04 /* CoreData.xcdatamodeld in Sources */,
 				69EC12D82879C92500C7D947 /* SceneDelegate.swift in Sources */,
 				69EC12FA287CCF9100C7D947 /* RandomViewController.swift in Sources */,
