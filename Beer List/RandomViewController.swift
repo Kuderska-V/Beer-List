@@ -42,9 +42,7 @@ class RandomViewController: UIViewController {
                 }
             } catch {
                 DispatchQueue.main.async {
-                    let alert = UIAlertController(title: "Something went wrong", message: error.localizedDescription, preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    self.present(alert, animated: true)
+                    self.presentAlert(with:AlertController.somethingWentWrong.rawValue, message: error.localizedDescription)
                 }
             }
         }
@@ -127,7 +125,15 @@ class RandomViewController: UIViewController {
     }
 }
         
+extension RandomViewController {
     
+    func presentAlert(with title: String, message: String) {
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(ac, animated: true, completion: nil)
+    }
+}
+
     
 
 

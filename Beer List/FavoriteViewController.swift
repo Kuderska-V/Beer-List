@@ -74,7 +74,7 @@ class FavoriteViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: ViewControllers.detail.rawValue) as? DetailViewController {
             vc.beer = beers[indexPath.row]
             self.navigationController?.pushViewController(vc, animated: true)
         }

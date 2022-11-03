@@ -23,20 +23,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         password.delegate = self
     }
     
+    @IBAction func unwindTo(segue: UIStoryboardSegue) {
+        
+    }
+    
     @IBAction func pressLogin(_ sender: Any) {
         
         if areSomeFieldsEmpty() {
-            presentAlert(with: "Error", message: "Please, fill all the required fields")
+            presentAlert(with: "Error", message: AlertController.fieldsEmpty.rawValue)
             return
         }
         
         if !validator.isValid(email: email.text!) {
-            presentAlert(with: "Error", message: "Email is invalid")
+            presentAlert(with: "Error", message: AlertController.invalidEmail.rawValue)
             return
         }
         
         if !validator.isValid(password: password.text!) {
-            presentAlert(with: "Error", message: "Password must contain at least 5 characters, including numbers.")
+            presentAlert(with: "Error", message: AlertController.invalidPassword.rawValue)
             return
         }
         getUser()
@@ -50,28 +54,28 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
         request.predicate = NSPredicate(format: "userEmail = %@", email.text!)
         
-        guard let result = try? managedContext.fetch(request) else { return presentAlert(with: "Error", message: "Something went wrong") }
-        guard let user = result.first else { return presentAlert(with: "Error", message: "User not found") }
+        guard let result = try? managedContext.fetch(request) else { return presentAlert(with: "Error", message: AlertController.somethingWentWrong.rawValue) }
+        guard let user = result.first else { return presentAlert(with: "Error", message: AlertController.userNotFound.rawValue) }
         
         let e = (user as AnyObject).value(forKey: "userEmail") as! String
         let p = (user as AnyObject).value(forKey: "userPassword") as! String
         if e == email.text! {
             if p == password.text! {
-                defaults.set(email.text!, forKey: "loggedInUserEmail")
-                let vc = storyboard?.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+                defaults.set(email.text!, forKey: UserDefaultsKeys.loggedInUserEmail.rawValue)
+                let vc = storyboard?.instantiateViewController(withIdentifier: ViewControllers.tabbar.rawValue) as! UITabBarController
                 UIApplication.shared.windows.first?.rootViewController = vc
                 UIApplication.shared.windows.first?.makeKeyAndVisible()
             } else {
-                presentAlert(with: "Error", message: "Password incorrect")
+                presentAlert(with: "Error", message: AlertController.incorrectPassword.rawValue)
             }
         } else {
-            presentAlert(with: "Error", message: "User not found")
+            presentAlert(with: "Error", message: AlertController.userNotFound.rawValue)
         }
     }
     
     @IBAction func pressSignUp(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "SignUpViewController") as! SignUpViewController
+        let storyboard = UIStoryboard(name: Storyboards.main.rawValue, bundle: Bundle.main)
+        let vc = storyboard.instantiateViewController(withIdentifier: ViewControllers.signUp.rawValue) as! SignUpViewController
         navigationController?.pushViewController(vc, animated: true)
     }
     
