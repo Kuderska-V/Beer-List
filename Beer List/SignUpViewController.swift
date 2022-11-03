@@ -67,7 +67,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: ViewControllers.tabbar.rawValue) as! UITabBarController
             UIApplication.shared.windows.first?.rootViewController = vc
             UIApplication.shared.windows.first?.makeKeyAndVisible()
-            
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }

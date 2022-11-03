@@ -20,7 +20,7 @@ class ProfileViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewDidLoad()
+        super.viewWillAppear(animated)
         getUser()
     }
     
@@ -54,14 +54,15 @@ class ProfileViewController: UIViewController {
 
     @IBAction func tapLogout(_ sender: UIButton) {
         let alert = UIAlertController(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+            UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue)
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: ViewControllers.login.rawValue)
+            UIApplication.shared.windows.first?.rootViewController = vc
+            UIApplication.shared.windows.first?.makeKeyAndVisible()
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(alert, animated: true, completion: nil)
-        
-        UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue)
-        self.performSegue(withIdentifier: "unwind", sender: self)
-        super.viewDidLoad()
     }
-    
 }
 
 

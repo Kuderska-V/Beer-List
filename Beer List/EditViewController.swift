@@ -26,33 +26,35 @@ class EditViewController: UIViewController {
     func getUser() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
-        
+        guard let email = UserDefaults.standard.value(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue) as? String else { return }
         let request = NSFetchRequest<NSManagedObject>(entityName: "User")
-        //request.predicate = NSPredicate(format: "userEmail = %@", userEmail.text!)
+        request.predicate = NSPredicate(format: "userEmail = %@", email)
         do {
-            let result = try managedContext.fetch(request)
-            for data in result {
-                let firstName = data.value(forKey: "userFirstName") as? String
-                let lastName = data.value(forKey: "userLastName") as? String
-                editFirstName.text = firstName
-                editLastName.text = lastName
-            }
+            guard let result = try managedContext.fetch(request).first else { return }
+            editFirstName.text = result.value(forKey: "userFirstName") as? String
+            editLastName.text = result.value(forKey: "userLastName") as? String
         } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            print("Could not get user. \(error), \(error.userInfo)")
         }
     }
     
     func save() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "User", in: managedContext)!
-        let user = NSManagedObject(entity: entity, insertInto: managedContext)
-        user.setValue(editFirstName.text, forKey: "userFirstName")
-        user.setValue(editLastName.text, forKey: "userLastName")
+        guard let email = UserDefaults.standard.value(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue) as? String else { return }
+        let request = NSFetchRequest<NSManagedObject>(entityName: "User")
+        request.predicate = NSPredicate(format: "userEmail = %@", email)
         do {
-            try managedContext.save()
+            let user = try managedContext.fetch(request).first
+            user?.setValue(editFirstName.text, forKey: "userFirstName")
+            user?.setValue(editLastName.text, forKey: "userLastName")
+            do {
+                try managedContext.save()
+            } catch let error as NSError {
+                print("Could not update user. \(error), \(error.userInfo)")
+            }
         } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            print("Could not get user. \(error), \(error.userInfo)")
         }
     }
     

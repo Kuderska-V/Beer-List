@@ -23,10 +23,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         password.delegate = self
     }
     
-    @IBAction func unwindTo(segue: UIStoryboardSegue) {
-        
-    }
-    
     @IBAction func pressLogin(_ sender: Any) {
         
         if areSomeFieldsEmpty() {

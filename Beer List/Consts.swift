@@ -19,6 +19,7 @@ enum ViewControllers: String {
     case tabbar = "TabBarController"
     case detail = "Detail"
     case signUp = "SignUpViewController"
+    case login = "LoginViewController"
     case edit = "EditViewController"
     case favorite = "FavoriteViewController"
 }

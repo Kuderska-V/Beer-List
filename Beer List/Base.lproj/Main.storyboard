@@ -614,11 +614,9 @@
                         <outlet property="userEmail" destination="FIO-zZ-c3q" id="Vca-WF-mlQ"/>
                         <outlet property="userFirstName" destination="cn6-t5-Z0O" id="Sf5-7h-9gI"/>
                         <outlet property="userLastName" destination="0PP-aX-ERk" id="8X2-HZ-Cc8"/>
-                        <segue destination="oFx-ee-MaY" kind="unwind" identifier="unwind" unwindAction="unwindToSegue:" id="20f-lz-T9E"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hmd-rt-omG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="oFx-ee-MaY" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4206" y="1219"/>
         </scene>
