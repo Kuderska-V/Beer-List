@@ -397,7 +397,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search beer" id="0ne-eX-Lmk">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                            <rect key="frame" x="0.0" y="0.0" width="228" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
@@ -579,7 +579,6 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Favorite Beers"/>
                                         <connections>
-                                            <action selector="tapFavouriteBeers:" destination="0px-4M-jZQ" eventType="touchUpInside" id="zJK-zk-bIy"/>
                                             <segue destination="n2e-nt-G84" kind="show" identifier="" id="ygp-5g-oxX"/>
                                         </connections>
                                     </button>

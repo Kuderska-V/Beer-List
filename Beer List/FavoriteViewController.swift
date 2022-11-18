@@ -40,11 +40,16 @@ class FavoriteViewController: UITableViewController {
     func getFavouriteBeers() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
+        
+        guard let email = UserDefaults.standard.value(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue) as? String else { return }
+        
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Beer")
+        fetchRequest.predicate = NSPredicate(format: "beer.userEmail == %@", email)
+        
         do {
             let beerManagedObjects = try managedContext.fetch(fetchRequest)
+            
             beers = beerManagedObjects.map { Beer.from($0) }.sorted {
-                
                 return $0.createdAt?.timeIntervalSince1970 ?? 0.0 > $1.createdAt?.timeIntervalSince1970 ?? 0.0
             }
             

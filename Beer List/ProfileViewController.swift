@@ -27,20 +27,17 @@ class ProfileViewController: UIViewController {
     func getUser() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
+        guard let email = UserDefaults.standard.value(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue) as? String else { return }
         let request = NSFetchRequest<NSManagedObject>(entityName: "User")
-        //request.predicate = NSPredicate(format: "userEmail = %@", userEmail.text!)
+        request.predicate = NSPredicate(format: "userEmail = %@", email)
+        
         do {
-            let result = try managedContext.fetch(request)
-            for data in result {
-                let firstName = data.value(forKey: "userFirstName") as? String
-                let lastName = data.value(forKey: "userLastName") as? String
-                let email = data.value(forKey: "userEmail") as? String
-                userFirstName.text = firstName
-                userLastName.text = lastName
-                userEmail.text = email
-            }
+            guard let result = try managedContext.fetch(request).first else { return }
+            userFirstName.text = result.value(forKey: "userFirstName") as? String
+            userLastName.text = result.value(forKey: "userLastName") as? String
+            userEmail.text = result.value(forKey: "userEmail") as? String
         } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            print("Could not get user. \(error), \(error.userInfo)")
         }
     }
     
@@ -49,8 +46,6 @@ class ProfileViewController: UIViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: ViewControllers.edit.rawValue) as! EditViewController
         navigationController?.pushViewController(vc, animated: true)
     }
-    
-    @IBAction func tapFavouriteBeers(_ sender: Any) { }
 
     @IBAction func tapLogout(_ sender: UIButton) {
         let alert = UIAlertController(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
