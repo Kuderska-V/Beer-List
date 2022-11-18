@@ -44,7 +44,7 @@ class FavoriteViewController: UITableViewController {
         guard let email = UserDefaults.standard.value(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue) as? String else { return }
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Beer")
-        fetchRequest.predicate = NSPredicate(format: "beer.userEmail == %@", email)
+        fetchRequest.predicate = NSPredicate(format: "owner_email == %@", email)
         
         do {
             let beerManagedObjects = try managedContext.fetch(fetchRequest)

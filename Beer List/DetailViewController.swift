@@ -79,6 +79,8 @@ class DetailViewController: UIViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
+        guard let email = UserDefaults.standard.value(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue) as? String else { return }
+        beer.ownerEmail = email
         let managedContext = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Beer", in: managedContext)!
         _ = Beer.toManagedObject(beer: beer, entity: entity, context: managedContext)
