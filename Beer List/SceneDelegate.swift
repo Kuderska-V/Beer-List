@@ -63,11 +63,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
             }
         }
-      
-        // If your app has support for iOS 8, add the following method too
-        func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-            return ApplicationDelegate.shared.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
-        }
-
 }
 
