@@ -17,7 +17,7 @@ class RandomViewController: UIViewController {
     @IBOutlet weak var yearRandom: UILabel!
     @IBOutlet weak var descriptionRandom: UITextView!
     
-    var beers: Beer?
+    var beer: Beer?
     var favoriteButtonItem: UIBarButtonItem?
     
     override func viewDidLoad() {
@@ -52,13 +52,13 @@ class RandomViewController: UIViewController {
         
     @IBAction func tapRandomButton(_ sender: UIButton) {
         fetchRundomBeer { beer in
-            self.beers = beer
+            self.beer = beer
             self.configureLayouts()
         }
     }
     
     func configureLayouts() {
-        guard let beer = beers else { return }
+        guard let beer = beer else { return }
         title = beer.name
         favoriteButtonItem = UIBarButtonItem(image: UIImage(systemName: isAddedToFavourites() ? "star.fill" : "star"), style: .plain, target: self, action: #selector(toggleFavorite))
         navigationItem.rightBarButtonItem = favoriteButtonItem
@@ -84,7 +84,7 @@ class RandomViewController: UIViewController {
     }
     
     func isAddedToFavourites() -> Bool {
-        guard let beer = beers else { return false }
+        guard let beer = beer else { return false }
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -96,11 +96,10 @@ class RandomViewController: UIViewController {
     }
     
     func save() {
-        guard let beer = beers else { return }
+        guard var beer = beer else { return }
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-       
-
-
+        guard let email = UserDefaults.standard.value(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue) as? String else { return }
+        beer.ownerEmail = email
         let managedContext = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Beer", in: managedContext)!
         Beer.toManagedObject(beer: beer, entity: entity, context: managedContext)
@@ -113,7 +112,7 @@ class RandomViewController: UIViewController {
     }
     
     func remove() {
-        guard let beer = beers else { return }
+        guard let beer = beer else { return }
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Beer")
