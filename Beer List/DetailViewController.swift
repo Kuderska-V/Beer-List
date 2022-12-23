@@ -76,9 +76,7 @@ class DetailViewController: UIViewController {
     }
     
     func save() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         guard let email = UserDefaults.standard.value(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue) as? String else { return }
         beer.ownerEmail = email
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -94,6 +92,8 @@ class DetailViewController: UIViewController {
     
     func remove() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        guard let email = UserDefaults.standard.value(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue) as? String else { return }
+        beer.ownerEmail = email
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Beer")
         fetchRequest.predicate = NSPredicate(format: "id == %d" , beer.id)

@@ -7,12 +7,13 @@
 
 import UIKit
 import CoreData
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
-    
     let defaults = UserDefaults.standard
     let validator: ValidatorProtocol = Validator()
     
@@ -21,6 +22,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         password.isSecureTextEntry = true
         email.delegate = self
         password.delegate = self
+        
+        let buttonFB = FBLoginButton()
+        buttonFB.permissions = ["public_profile", "email"]
+        buttonFB.delegate = self
+        buttonFB.frame.origin.y = 600
+        buttonFB.frame.origin.x = 100
+        self.view.addSubview(buttonFB)
     }
     
     @IBAction func pressLogin(_ sender: Any) {
@@ -69,6 +77,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    
     @IBAction func pressSignUp(_ sender: Any) {
         let storyboard = UIStoryboard(name: Storyboards.main.rawValue, bundle: Bundle.main)
         let vc = storyboard.instantiateViewController(withIdentifier: ViewControllers.signUp.rawValue) as! SignUpViewController
@@ -96,6 +105,22 @@ extension LoginViewController {
         ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(ac, animated: true, completion: nil)
     }
+    
 }
 
+extension LoginViewController: LoginButtonDelegate {
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+            if result?.isCancelled ?? false {
+                print("Cancelled")
+            } else if error != nil {
+                print("ERROR: Trying to get login results")
+            } else {
+                print("Logged in")
+            }
+        }
 
+        func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+            // Do something after the user pressed the logout button
+            print("You logged out!")
+        }
+}

@@ -21,5 +21,29 @@
 			</array>
 		</dict>
 	</dict>
+    
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+      <key>CFBundleURLSchemes</key>
+      <array>
+        <string>fbnazarukvitalia@gmail.com</string>
+      </array>
+      </dict>
+    </array>
+    <key>FacebookAppID</key>
+    <string>nazarukvitalia@gmail.com</string>
+    <key>FacebookClientToken</key>
+    <string>6d302a5a6b5a5b360519315b35d83f02</string>
+    <key>FacebookDisplayName</key>
+    <string>Beer-List</string>
+    
+    
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>fbapi</string>
+      <string>fb-messenger-share-api</string>
+    </array>
+    
 </dict>
 </plist>
