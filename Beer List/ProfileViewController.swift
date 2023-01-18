@@ -27,7 +27,9 @@ class ProfileViewController: UIViewController {
     func getUser() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
+        
         guard let email = UserDefaults.standard.value(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue) as? String else { return }
+        
         let request = NSFetchRequest<NSManagedObject>(entityName: "User")
         request.predicate = NSPredicate(format: "userEmail = %@", email)
         
@@ -50,10 +52,14 @@ class ProfileViewController: UIViewController {
     @IBAction func tapLogout(_ sender: UIButton) {
         let alert = UIAlertController(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-            UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue)
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: ViewControllers.login.rawValue)
-            UIApplication.shared.windows.first?.rootViewController = vc
-            UIApplication.shared.windows.first?.makeKeyAndVisible()
+        UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue)
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: ViewControllers.login.rawValue) as? LoginViewController
+//        UIApplication.shared.windows.first?.rootViewController = vc
+//        UIApplication.shared.windows.first?.makeKeyAndVisible()
+            let navVC = UINavigationController(rootViewController: vc!)
+            self.view.window?.rootViewController = navVC
+            self.view.window?.makeKeyAndVisible()
+
         })
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(alert, animated: true, completion: nil)

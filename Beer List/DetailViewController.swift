@@ -68,6 +68,8 @@ class DetailViewController: UIViewController {
     func isAddedToFavourites() -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
+        guard let email = UserDefaults.standard.value(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue) as? String else { return false }
+        beer.ownerEmail = email
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Beer")
         fetchRequest.predicate = NSPredicate(format: "id == %d" , beer.id)
         let count = try? managedContext.count(for: fetchRequest)
@@ -77,9 +79,9 @@ class DetailViewController: UIViewController {
     
     func save() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
         guard let email = UserDefaults.standard.value(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue) as? String else { return }
         beer.ownerEmail = email
-        let managedContext = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Beer", in: managedContext)!
         _ = Beer.toManagedObject(beer: beer, entity: entity, context: managedContext)
         do {
@@ -92,8 +94,6 @@ class DetailViewController: UIViewController {
     
     func remove() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        guard let email = UserDefaults.standard.value(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue) as? String else { return }
-        beer.ownerEmail = email
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Beer")
         fetchRequest.predicate = NSPredicate(format: "id == %d" , beer.id)

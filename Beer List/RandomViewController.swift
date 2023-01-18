@@ -29,7 +29,6 @@ class RandomViewController: UIViewController {
         taglineRandom.isHidden = true
         descriptionRandom.isHidden = true
         tapRandomButton(UIButton())
-        
     }
     
     func fetchRundomBeer(completion: @escaping (Beer?) -> Void) {
@@ -84,10 +83,11 @@ class RandomViewController: UIViewController {
     }
     
     func isAddedToFavourites() -> Bool {
-        guard let beer = beer else { return false }
+        guard var beer = beer else { return false }
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
-        
         let managedContext = appDelegate.persistentContainer.viewContext
+        guard let email = UserDefaults.standard.value(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue) as? String else { return false }
+        beer.ownerEmail = email
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Beer")
         fetchRequest.predicate = NSPredicate(format: "id == %d" , beer.id)
         let count = try? managedContext.count(for: fetchRequest)
@@ -128,7 +128,6 @@ class RandomViewController: UIViewController {
 }
         
 extension RandomViewController {
-    
     func presentAlert(with title: String, message: String) {
         let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))

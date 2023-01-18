@@ -95,7 +95,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rlZ-Vs-LXo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4206" y="465"/>
+            <point key="canvasLocation" x="5115.9420289855079" y="464.73214285714283"/>
         </scene>
         <!--Favorite View Controller-->
         <scene sceneID="y6R-Nu-Qwn">
@@ -174,7 +174,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wbp-lH-s25" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5042" y="1219"/>
+            <point key="canvasLocation" x="5950.7246376811599" y="1218.75"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="ZBH-Xo-TKq">
@@ -204,7 +204,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="8B3-xV-POB">
-                                <rect key="frame" x="25" y="322" width="364" height="252.5"/>
+                                <rect key="frame" x="25" y="255" width="364" height="386.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log in to your account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="alq-r5-wxA">
                                         <rect key="frame" x="0.0" y="0.0" width="364" height="20.5"/>
@@ -242,6 +242,32 @@
                                             <action selector="pressLogin:" destination="k2b-qk-eLP" eventType="touchUpInside" id="jAg-l7-9DI"/>
                                         </connections>
                                     </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="v0K-Ry-CAN">
+                                        <rect key="frame" x="0.0" y="302.5" width="364" height="84"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6y3-d9-mIg">
+                                                <rect key="frame" x="0.0" y="0.0" width="364" height="34.5"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="Continue with Facebook">
+                                                    <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="pressFacebookLogin:" destination="k2b-qk-eLP" eventType="touchUpInside" id="pDA-QT-czp"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="THk-T1-r8o">
+                                                <rect key="frame" x="0.0" y="49.5" width="364" height="34.5"/>
+                                                <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="Continue with Google">
+                                                    <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="pressGoogleLogin:" destination="k2b-qk-eLP" eventType="touchUpInside" id="8gC-Gp-ssr"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -258,13 +284,15 @@
                     </view>
                     <navigationItem key="navigationItem" id="xwR-Q4-o5X"/>
                     <connections>
+                        <outlet property="btnFacebook" destination="6y3-d9-mIg" id="EXI-2K-MXa"/>
+                        <outlet property="btnGoogle" destination="THk-T1-r8o" id="yEA-5S-0Jy"/>
                         <outlet property="email" destination="Y4S-xz-uvU" id="brB-ey-pj8"/>
                         <outlet property="password" destination="Bfu-iA-Rdp" id="QTu-9L-vLd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="duM-Sy-Ujs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="895.6521739130435" y="464.73214285714283"/>
+            <point key="canvasLocation" x="1741" y="465"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="yYC-Zc-rzz">
@@ -335,7 +363,9 @@
                             <constraint firstItem="laB-8M-HWF" firstAttribute="centerX" secondItem="H1D-u6-wfr" secondAttribute="centerX" id="dY9-NV-NM1"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="wLC-H8-gaE"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="Vvf-1a-2aY"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="email" destination="Uiw-Kk-dlM" id="cgC-El-itl"/>
                         <outlet property="firstName" destination="Ab2-Gu-ciU" id="3Yf-SA-Hah"/>
@@ -346,7 +376,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gHm-un-PPe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1626" y="465"/>
+            <point key="canvasLocation" x="2579.7101449275365" y="464.73214285714283"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="RX2-U7-otD">
@@ -366,7 +396,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7n3-Mb-iJT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2466.666666666667" y="464.73214285714283"/>
+            <point key="canvasLocation" x="3376.811594202899" y="464.73214285714283"/>
         </scene>
         <!--All-->
         <scene sceneID="1jF-FV-Sv5">
@@ -543,7 +573,7 @@
         <!--Profile View Controller-->
         <scene sceneID="6ab-bY-iok">
             <objects>
-                <viewController id="0px-4M-jZQ" customClass="ProfileViewController" customModule="Beer_List" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileViewController" id="0px-4M-jZQ" customClass="ProfileViewController" customModule="Beer_List" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="f3N-0b-GLu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -617,7 +647,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hmd-rt-omG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4206" y="1219"/>
+            <point key="canvasLocation" x="5115.9420289855079" y="1218.75"/>
         </scene>
         <!--Edit View Controller-->
         <scene sceneID="rwx-Aw-1Pk">
@@ -715,7 +745,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YQ6-TR-9h4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3367" y="465"/>
+            <point key="canvasLocation" x="4276.811594202899" y="464.73214285714283"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eMX-LC-iUU">
@@ -733,7 +763,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8pm-7c-Y3O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-133.33333333333334" y="464.73214285714283"/>
+            <point key="canvasLocation" x="901" y="465"/>
         </scene>
         <!--Profile-->
         <scene sceneID="FIV-Ez-Epu">
@@ -752,7 +782,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ajz-RI-CbW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3367" y="1219"/>
+            <point key="canvasLocation" x="4276.811594202899" y="1218.75"/>
         </scene>
     </scenes>
     <resources>
