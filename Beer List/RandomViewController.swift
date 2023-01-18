@@ -87,9 +87,8 @@ class RandomViewController: UIViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         guard let email = UserDefaults.standard.value(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue) as? String else { return false }
-        beer.ownerEmail = email
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Beer")
-        fetchRequest.predicate = NSPredicate(format: "id == %d" , beer.id)
+        fetchRequest.predicate = NSPredicate(format: "id == %d && owner_email = %@" , beer.id, email)
         let count = try? managedContext.count(for: fetchRequest)
         guard let count = count else { return false }
         return count > 0
