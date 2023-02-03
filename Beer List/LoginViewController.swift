@@ -187,6 +187,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    private func saveUserFromSocials(email: String, firstName: String, lastName: String) {
+        
+    }
+    
+    private func routeToTabBarController() {
+        
+    }
+    
     @IBAction func pressSignUp(_ sender: Any) {
         let storyboard = UIStoryboard(name: Storyboards.main.rawValue, bundle: Bundle.main)
         let vc = storyboard.instantiateViewController(withIdentifier: ViewControllers.signUp.rawValue) as! SignUpViewController
