@@ -110,17 +110,35 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 let fbEmail = data["email"] as? String
                 let fbFirstName = data["first_name"] as? String
                 let fbLastName = data["last_name"] as? String
-                    
+                
                 guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
                 let managedContext = appDelegate.persistentContainer.viewContext
                 let newUser = NSEntityDescription.insertNewObject(forEntityName: "User", into: managedContext) as NSManagedObject
-                newUser.setValue(fbEmail, forKey: "userEmail")
-                newUser.setValue(fbFirstName, forKey: "userFirstName")
-                newUser.setValue(fbLastName, forKey: "userLastName")
-                self.defaults.set(fbEmail, forKey: UserDefaultsKeys.loggedInUserEmail.rawValue)
-                print("\(newUser)")
-            } else {
-                print(error?.localizedDescription as Any)
+                
+                let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+                request.predicate = NSPredicate(format: "userEmail = %@", fbEmail!)
+                do {
+                    let count = try managedContext.count(for: request)
+                    if(count == 0){
+                        newUser.setValue(fbEmail, forKey: "userEmail")
+                        newUser.setValue(fbFirstName, forKey: "userFirstName")
+                        newUser.setValue(fbLastName, forKey: "userLastName")
+                        try managedContext.save()
+                        self.defaults.set(fbEmail, forKey: UserDefaultsKeys.loggedInUserEmail.rawValue)
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: ViewControllers.tabbar.rawValue) as! UITabBarController
+                        self.view.window?.rootViewController = vc
+                        self.view.window?.makeKeyAndVisible()
+                        print("no present")
+                    } else {
+                        self.defaults.set(fbEmail, forKey: UserDefaultsKeys.loggedInUserEmail.rawValue)
+                        print("one matching item found")
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: ViewControllers.tabbar.rawValue) as! UITabBarController
+                        self.view.window?.rootViewController = vc
+                        self.view.window?.makeKeyAndVisible()
+                    }
+                } catch let error as NSError {
+                    print("Could not fetch \(error), \(error.userInfo)")
+                }
             }
         }
     }
@@ -135,23 +153,38 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             guard let signInResult = signInResult else { return }
             let user = signInResult.user
             
-            let email = user.profile!.email
+            let emailGoogle = user.profile!.email
             let firstName = user.profile!.givenName
             let lastName = user.profile!.familyName
-            
+
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
             let managedContext = appDelegate.persistentContainer.viewContext
             let newUser = NSEntityDescription.insertNewObject(forEntityName: "User", into: managedContext) as NSManagedObject
-            newUser.setValue(email, forKey: "userEmail")
-            newUser.setValue(firstName, forKey: "userFirstName")
-            newUser.setValue(lastName, forKey: "userLastName")
-            self.defaults.set(email, forKey: UserDefaultsKeys.loggedInUserEmail.rawValue)
-            print("\(newUser)")
-            
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: ViewControllers.tabbar.rawValue) as! UITabBarController
-            self.view.window?.rootViewController = vc
-            self.view.window?.makeKeyAndVisible()
-          }
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+            request.predicate = NSPredicate(format: "userEmail = %@", emailGoogle)
+            do {
+                let count = try managedContext.count(for: request)
+                if(count == 0){
+                    newUser.setValue(emailGoogle, forKey: "userEmail")
+                    newUser.setValue(firstName, forKey: "userFirstName")
+                    newUser.setValue(lastName, forKey: "userLastName")
+                    try managedContext.save()
+                    self.defaults.set(emailGoogle, forKey: UserDefaultsKeys.loggedInUserEmail.rawValue)
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: ViewControllers.tabbar.rawValue) as! UITabBarController
+                    self.view.window?.rootViewController = vc
+                    self.view.window?.makeKeyAndVisible()
+                    print("no present")
+                } else {
+                    self.defaults.set(emailGoogle, forKey: UserDefaultsKeys.loggedInUserEmail.rawValue)
+                    print("one matching item found")
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: ViewControllers.tabbar.rawValue) as! UITabBarController
+                    self.view.window?.rootViewController = vc
+                    self.view.window?.makeKeyAndVisible()
+                }
+            } catch let error as NSError {
+                print("Could not fetch \(error), \(error.userInfo)")
+            }
+        }
     }
     
     @IBAction func pressSignUp(_ sender: Any) {

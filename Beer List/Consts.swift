@@ -22,6 +22,7 @@ enum ViewControllers: String {
     case login = "LoginViewController"
     case edit = "EditViewController"
     case favorite = "FavoriteViewController"
+    case webView = "webView"
 }
 
 enum AlertController: String {

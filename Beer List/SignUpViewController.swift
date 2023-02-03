@@ -29,8 +29,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         passwordConfirmation.delegate = self
         password.isSecureTextEntry = true
         passwordConfirmation.isSecureTextEntry = true
-//        let backButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.backward"), style: .plain, target: self, action: #selector(tapBackButton))
-//        navigationItem.leftBarButtonItem = backButtonItem
     }
     
     @IBAction func SignUpTapped(_ sender: Any) {
@@ -68,14 +66,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             try managedContext.save()
             defaults.set(email.text!, forKey: UserDefaultsKeys.loggedInUserEmail.rawValue)
             let vc = self.storyboard?.instantiateViewController(withIdentifier: ViewControllers.tabbar.rawValue) as! UITabBarController
-//            UIApplication.shared.windows.first?.rootViewController = vc
-//            UIApplication.shared.windows.first?.makeKeyAndVisible()
             self.view.window?.rootViewController = vc
             self.view.window?.makeKeyAndVisible()
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
-        print(newUser)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -92,11 +87,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
         return true
     }
-    
-//    @objc func tapBackButton() {
-//        //let vc = self.storyboard?.instantiateViewController(withIdentifier: ViewControllers.login.rawValue)
-//        self.navigationController?.popViewController(animated: true)
-//    }
 }
 
 extension SignUpViewController {

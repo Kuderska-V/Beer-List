@@ -14,6 +14,11 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var userLastName: UILabel!
     @IBOutlet weak var userEmail: UILabel!
     
+    var testUserData = InstagramTestUser(access_token: "", user_id: 0)
+    var instagramApi = InstagramApi.shared
+    var instagramUser: InstagramUser?
+    var signedIn = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Profile"
@@ -48,14 +53,31 @@ class ProfileViewController: UIViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: ViewControllers.edit.rawValue) as! EditViewController
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    @IBAction func tapInstagramButton(_ sender: Any) {
+        
+        if self.testUserData.user_id == 0 {
+            let storyboard = UIStoryboard(name: Storyboards.main.rawValue, bundle: Bundle.main)
+            let vc = storyboard.instantiateViewController(withIdentifier: ViewControllers.webView.rawValue) as! WebViewController
+            vc.instagramApi = self.instagramApi
+            vc.mainVC = self
+            self.present(vc, animated:true)
+        } else {
+            self.instagramApi.getInstagramUser(testUserData: self.testUserData) { [weak self] (user) in
+                self?.instagramUser = user
+                self?.signedIn = true
+
+            }
+        }
+
+    }
+    
 
     @IBAction func tapLogout(_ sender: UIButton) {
         let alert = UIAlertController(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
         UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue)
         let vc = self.storyboard?.instantiateViewController(withIdentifier: ViewControllers.login.rawValue) as? LoginViewController
-//        UIApplication.shared.windows.first?.rootViewController = vc
-//        UIApplication.shared.windows.first?.makeKeyAndVisible()
             let navVC = UINavigationController(rootViewController: vc!)
             self.view.window?.rootViewController = navVC
             self.view.window?.makeKeyAndVisible()

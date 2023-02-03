@@ -83,7 +83,7 @@ class RandomViewController: UIViewController {
     }
     
     func isAddedToFavourites() -> Bool {
-        guard var beer = beer else { return false }
+        guard let beer = beer else { return false }
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         guard let email = UserDefaults.standard.value(forKey: UserDefaultsKeys.loggedInUserEmail.rawValue) as? String else { return false }

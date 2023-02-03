@@ -570,7 +570,7 @@
             </objects>
             <point key="canvasLocation" x="5043" y="-275"/>
         </scene>
-        <!--Profile View Controller-->
+        <!--Item-->
         <scene sceneID="6ab-bY-iok">
             <objects>
                 <viewController storyboardIdentifier="ProfileViewController" id="0px-4M-jZQ" customClass="ProfileViewController" customModule="Beer_List" customModuleProvider="target" sceneMemberID="viewController">
@@ -632,13 +632,20 @@
                             <constraint firstItem="mED-rx-qQL" firstAttribute="centerX" secondItem="f3N-0b-GLu" secondAttribute="centerX" id="X9G-Qb-bRy"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="7kT-gf-gKy"/>
                     <navigationItem key="navigationItem" id="nl0-bQ-YnS">
+                        <barButtonItem key="leftBarButtonItem" title="Instagram" image="instagram" id="Ros-nt-g7n">
+                            <connections>
+                                <action selector="tapInstagramButton:" destination="0px-4M-jZQ" id="bLU-DT-OZn"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="TVC-8y-4ua">
                             <connections>
                                 <action selector="tapEditButton:" destination="0px-4M-jZQ" id="fzN-gd-b2v"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="userEmail" destination="FIO-zZ-c3q" id="Vca-WF-mlQ"/>
                         <outlet property="userFirstName" destination="cn6-t5-Z0O" id="Sf5-7h-9gI"/>
@@ -726,7 +733,36 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OGl-my-zbK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4205.7971014492759" y="1932.5892857142856"/>
+            <point key="canvasLocation" x="4277" y="1914"/>
+        </scene>
+        <!--Web View Controller-->
+        <scene sceneID="pPq-G8-e6h">
+            <objects>
+                <viewController storyboardIdentifier="webView" id="ULJ-49-YCy" customClass="WebViewController" customModule="Beer_List" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zLH-iM-9yf">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2x4-cf-pWj">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="aih-Hw-Ih2"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="2x4-cf-pWj" id="fDg-sL-mid"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hPo-79-dM7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5115.9420289855079" y="1913.8392857142856"/>
         </scene>
         <!--Random-->
         <scene sceneID="5o7-fg-lJG">
@@ -787,6 +823,7 @@
     </scenes>
     <resources>
         <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
+        <image name="instagram" width="29" height="29"/>
         <image name="list.bullet" catalog="system" width="128" height="87"/>
         <image name="person.circle.fill" catalog="system" width="128" height="123"/>
         <image name="questionmark.app.fill" catalog="system" width="128" height="114"/>
