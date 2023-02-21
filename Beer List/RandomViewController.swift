@@ -17,6 +17,7 @@ class RandomViewController: UIViewController {
     @IBOutlet weak var yearRandom: UILabel!
     @IBOutlet weak var descriptionRandom: UITextView!
     
+    
     var beer: Beer?
     var favoriteButtonItem: UIBarButtonItem?
     

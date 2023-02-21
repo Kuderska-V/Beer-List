@@ -18,6 +18,8 @@
 	<string>6d302a5a6b5a5b360519315b35d83f02</string>
 	<key>FacebookDisplayName</key>
 	<string>Beer-List</string>
+	<key>GIDClientID</key>
+	<string>974402283717-lg7jfnmf32816h9k0a79c1uquup5jvce.apps.googleusercontent.com</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -42,7 +44,5 @@
 			</array>
 		</dict>
 	</dict>
-	<key>GIDClientID</key>
-	<string>974402283717-lg7jfnmf32816h9k0a79c1uquup5jvce.apps.googleusercontent.com</string>
 </dict>
 </plist>

@@ -11,8 +11,7 @@
 		69301513294FA82300B2513A /* FacebookGamingServices in Frameworks */ = {isa = PBXBuildFile; productRef = 69301512294FA82300B2513A /* FacebookGamingServices */; };
 		69301515294FA82300B2513A /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 69301514294FA82300B2513A /* FacebookLogin */; };
 		69301517294FA82300B2513A /* FacebookShare in Frameworks */ = {isa = PBXBuildFile; productRef = 69301516294FA82300B2513A /* FacebookShare */; };
-		695E8E4529894F3D00BB0EDD /* InstagramApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695E8E4429894F3D00BB0EDD /* InstagramApi.swift */; };
-		695E8E472989505400BB0EDD /* InstagramResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695E8E462989505400BB0EDD /* InstagramResponse.swift */; };
+		695E8E472989505400BB0EDD /* InstagramApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695E8E462989505400BB0EDD /* InstagramApi.swift */; };
 		695E8E492989516900BB0EDD /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695E8E482989516900BB0EDD /* WebViewController.swift */; };
 		6985019C2908133E00B4514A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6985019B2908133E00B4514A /* ProfileViewController.swift */; };
 		6985019E2909570A00B4514A /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6985019D2909570A00B4514A /* EditViewController.swift */; };
@@ -39,8 +38,7 @@
 
 /* Begin PBXFileReference section */
 		6930150E294F94CC00B2513A /* Beer List.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Beer List.entitlements"; sourceTree = "<group>"; };
-		695E8E4429894F3D00BB0EDD /* InstagramApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramApi.swift; sourceTree = "<group>"; };
-		695E8E462989505400BB0EDD /* InstagramResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramResponse.swift; sourceTree = "<group>"; };
+		695E8E462989505400BB0EDD /* InstagramApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramApi.swift; sourceTree = "<group>"; };
 		695E8E482989516900BB0EDD /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		6985019B2908133E00B4514A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		6985019D2909570A00B4514A /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
@@ -124,8 +122,7 @@
 				69DF36D128E5A572000F48BD /* SignUpViewController.swift */,
 				6985019B2908133E00B4514A /* ProfileViewController.swift */,
 				6985019D2909570A00B4514A /* EditViewController.swift */,
-				695E8E4429894F3D00BB0EDD /* InstagramApi.swift */,
-				695E8E462989505400BB0EDD /* InstagramResponse.swift */,
+				695E8E462989505400BB0EDD /* InstagramApi.swift */,
 				695E8E482989516900BB0EDD /* WebViewController.swift */,
 				69BB62DD287EA9C400FC41A5 /* Model */,
 				69EC12DB2879C92500C7D947 /* Main.storyboard */,
@@ -229,7 +226,6 @@
 				6985019C2908133E00B4514A /* ProfileViewController.swift in Sources */,
 				6985019E2909570A00B4514A /* EditViewController.swift in Sources */,
 				EE945B342902A90E007DE106 /* Validator.swift in Sources */,
-				695E8E4529894F3D00BB0EDD /* InstagramApi.swift in Sources */,
 				69C107E928A271220098ED04 /* CoreData.xcdatamodeld in Sources */,
 				69EC12D82879C92500C7D947 /* SceneDelegate.swift in Sources */,
 				69EC12FA287CCF9100C7D947 /* RandomViewController.swift in Sources */,
@@ -239,7 +235,7 @@
 				69E1680D28849C0C00FB5ACE /* FavoriteViewController.swift in Sources */,
 				698501A02909591900B4514A /* ViewController.swift in Sources */,
 				69EC12EC2879CA7B00C7D947 /* BeerTableViewCell.swift in Sources */,
-				695E8E472989505400BB0EDD /* InstagramResponse.swift in Sources */,
+				695E8E472989505400BB0EDD /* InstagramApi.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,6 +385,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Beer List/Info.plist";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "allow app always see your location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "allow app to see current location";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -418,6 +416,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Beer List/Info.plist";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "allow app always see your location";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "allow app to see current location";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

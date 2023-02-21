@@ -8,6 +8,8 @@
 import UIKit
 import Kingfisher
 import CoreData
+import MapKit
+import CoreLocation
 
 class DetailViewController: UIViewController {
 
@@ -16,8 +18,13 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var yearLabel: UILabel!
     @IBOutlet weak var taglineLabel: UILabel!
     @IBOutlet weak var descriptionBeer: UITextView!
+    @IBOutlet private var mapView: MKMapView!
+    @IBOutlet weak var scroller: UIScrollView!
     
     var beer: Beer!
+ 
+    var locationManager = CLLocationManager()
+    var currentLocation: CLLocation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,8 +36,15 @@ class DetailViewController: UIViewController {
         yearLabel.text = beer.first_brewed
         let favoriteButtonItem = UIBarButtonItem(image: UIImage(systemName: isAddedToFavourites() ? "star.fill" : "star"), style: .plain, target: self, action: #selector(toggleFavorite))
         navigationItem.rightBarButtonItem = favoriteButtonItem
+        
+        mapView.delegate = self
+        mapView.register(MKPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        determineCurrentLocation()
+        addBeerPin()
     }
     
+
+
     func fetchBeerDatails() {
         let url = URL(string: "https://api.punkapi.com/v2/beers/\(beer.id)")!
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
@@ -104,4 +118,50 @@ class DetailViewController: UIViewController {
         try? managedContext.save()
         navigationItem.rightBarButtonItem?.image = UIImage(systemName: "star")
     }
+    
+    @IBAction func tapGetDirection(_ sender: UIButton) {
+        openGoogleMap()
+    }
+    
 }
+
+
+extension DetailViewController: MKMapViewDelegate, CLLocationManagerDelegate {
+    
+    func determineCurrentLocation() {
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if !locations.isEmpty, currentLocation == nil {
+            currentLocation = locations.first
+            locationManager.stopUpdatingLocation()
+            let lat = currentLocation?.coordinate.latitude
+            let lon = currentLocation?.coordinate.longitude
+            let center = CLLocationCoordinate2D(latitude: lat!, longitude: lon!)
+            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
+            mapView.setRegion(region, animated: true)
+        }
+    }
+    
+    func addBeerPin() {
+        let pin = MKPointAnnotation()
+        pin.coordinate = CLLocationCoordinate2D(latitude: 48.9232, longitude: 24.7381)
+        pin.title = beer.name
+        mapView.addAnnotation(pin)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+            print("Error - locationManager: \(error.localizedDescription)")
+        }
+
+    func openGoogleMap() {
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: 48.9232, longitude: 24.7381), addressDictionary: nil))
+        mapItem.name = beer.name
+        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+    }
+
+}
+
