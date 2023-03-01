@@ -8,6 +8,8 @@
 import UIKit
 import Kingfisher
 import CoreData
+import MapKit
+import CoreLocation
 
 class RandomViewController: UIViewController {
 
@@ -15,11 +17,14 @@ class RandomViewController: UIViewController {
     @IBOutlet weak var nameRandom: UILabel!
     @IBOutlet weak var taglineRandom: UILabel!
     @IBOutlet weak var yearRandom: UILabel!
-    @IBOutlet weak var descriptionRandom: UITextView!
-    
+    @IBOutlet weak var descriptionRandom: UILabel!
+    @IBOutlet weak var mapView: MKMapView!
     
     var beer: Beer?
     var favoriteButtonItem: UIBarButtonItem?
+    var locationManager = CLLocationManager()
+    var currentLocation: CLLocation?
+    let pin = MKPointAnnotation()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +35,11 @@ class RandomViewController: UIViewController {
         taglineRandom.isHidden = true
         descriptionRandom.isHidden = true
         tapRandomButton(UIButton())
+        mapView.delegate = self
+        mapView.register(MKPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        determineCurrentLocation()
     }
+    
     
     func fetchRundomBeer(completion: @escaping (Beer?) -> Void) {
         let url = URL(string: "https://api.punkapi.com/v2/beers/random")!
@@ -54,6 +63,7 @@ class RandomViewController: UIViewController {
         fetchRundomBeer { beer in
             self.beer = beer
             self.configureLayouts()
+            self.generateAnnoLoc()
         }
     }
     
@@ -125,6 +135,16 @@ class RandomViewController: UIViewController {
         try? managedContext.save()
         navigationItem.rightBarButtonItem?.image = UIImage(systemName: "star")
     }
+    
+    @IBAction func tapGetDirection(_ sender: UIButton) {
+        openGoogleMap()
+    }
+    
+    func determineCurrentLocation() {
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    }
 }
         
 extension RandomViewController {
@@ -135,6 +155,59 @@ extension RandomViewController {
     }
 }
 
+extension RandomViewController: MKMapViewDelegate, CLLocationManagerDelegate {
     
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if !locations.isEmpty, currentLocation == nil {
+            currentLocation = locations.first
+            locationManager.stopUpdatingLocation()
+            let lat = currentLocation?.coordinate.latitude
+            let lon = currentLocation?.coordinate.longitude
+            let center = CLLocationCoordinate2D(latitude: lat!, longitude: lon!)
+            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
+            mapView.showsUserLocation = true
+            mapView.setRegion(region, animated: true)
+        }
+    }
+    
+    func generateAnnoLoc() -> CLLocationCoordinate2D  {
+        pin.coordinate = generateRandomCoordinates(min: 10, max: 1000)
+        pin.title = beer?.name
+        mapView.addAnnotation(pin)
+        return pin.coordinate
+    }
+    
+    func generateRandomCoordinates(min: UInt32, max: UInt32)-> CLLocationCoordinate2D {
+        let currentLong = locationManager.location?.coordinate.longitude
+        let currentLat = locationManager.location?.coordinate.latitude
+        let meterCord = 0.00900900900901 / 1000
+        let randomMeters = UInt(arc4random_uniform(max) + min)
+        let randomPM = arc4random_uniform(6)
+        let metersCordN = meterCord * Double(randomMeters)
+        if randomPM == 0 {
+            return CLLocationCoordinate2D(latitude: currentLat! + metersCordN, longitude: currentLong! + metersCordN)
+        } else if randomPM == 1 {
+            return CLLocationCoordinate2D(latitude: currentLat! - metersCordN, longitude: currentLong! - metersCordN)
+        }else if randomPM == 2 {
+            return CLLocationCoordinate2D(latitude: currentLat! + metersCordN, longitude: currentLong! - metersCordN)
+        }else if randomPM == 3 {
+            return CLLocationCoordinate2D(latitude: currentLat! - metersCordN, longitude: currentLong! + metersCordN)
+        }else if randomPM == 4 {
+            return CLLocationCoordinate2D(latitude: currentLat!, longitude: currentLong! - metersCordN)
+        }else {
+            return CLLocationCoordinate2D(latitude: currentLat! - metersCordN, longitude: currentLong!)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+            print("Error - locationManager: \(error.localizedDescription)")
+    }
+
+    func openGoogleMap() {
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: pin.coordinate.latitude, longitude: pin.coordinate.longitude), addressDictionary: nil))
+        mapItem.name = beer?.name
+        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+    }
+}
 
 

@@ -17,14 +17,13 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var yearLabel: UILabel!
     @IBOutlet weak var taglineLabel: UILabel!
-    @IBOutlet weak var descriptionBeer: UITextView!
+    @IBOutlet weak var descriptionBeer: UILabel!
     @IBOutlet private var mapView: MKMapView!
-    @IBOutlet weak var scroller: UIScrollView!
     
     var beer: Beer!
- 
     var locationManager = CLLocationManager()
     var currentLocation: CLLocation?
+    let pin = MKPointAnnotation()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,14 +35,11 @@ class DetailViewController: UIViewController {
         yearLabel.text = beer.first_brewed
         let favoriteButtonItem = UIBarButtonItem(image: UIImage(systemName: isAddedToFavourites() ? "star.fill" : "star"), style: .plain, target: self, action: #selector(toggleFavorite))
         navigationItem.rightBarButtonItem = favoriteButtonItem
-        
         mapView.delegate = self
         mapView.register(MKPinAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         determineCurrentLocation()
-        addBeerPin()
+        generateAnnoLoc()
     }
-    
-
 
     func fetchBeerDatails() {
         let url = URL(string: "https://api.punkapi.com/v2/beers/\(beer.id)")!
@@ -123,16 +119,14 @@ class DetailViewController: UIViewController {
         openGoogleMap()
     }
     
-}
-
-
-extension DetailViewController: MKMapViewDelegate, CLLocationManagerDelegate {
-    
     func determineCurrentLocation() {
         locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }
+}
+
+extension DetailViewController: MKMapViewDelegate, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if !locations.isEmpty, currentLocation == nil {
@@ -143,25 +137,46 @@ extension DetailViewController: MKMapViewDelegate, CLLocationManagerDelegate {
             let center = CLLocationCoordinate2D(latitude: lat!, longitude: lon!)
             let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
             mapView.setRegion(region, animated: true)
+            mapView.addAnnotations([pin])
         }
     }
     
-    func addBeerPin() {
-        let pin = MKPointAnnotation()
-        pin.coordinate = CLLocationCoordinate2D(latitude: 48.9232, longitude: 24.7381)
+    func generateAnnoLoc() -> CLLocationCoordinate2D  {
+        pin.coordinate = generateRandomCoordinates(min: 10, max: 1000)
         pin.title = beer.name
-        mapView.addAnnotation(pin)
+        //mapView.addAnnotation(pin)
+        return pin.coordinate
+    }
+    
+    func generateRandomCoordinates(min: UInt32, max: UInt32)-> CLLocationCoordinate2D {
+        let currentLong = locationManager.location?.coordinate.longitude
+        let currentLat = locationManager.location?.coordinate.latitude
+        let meterCord = 0.00900900900901 / 1000
+        let randomMeters = UInt(arc4random_uniform(max) + min)
+        let randomPM = arc4random_uniform(6)
+        let metersCordN = meterCord * Double(randomMeters)
+        if randomPM == 0 {
+            return CLLocationCoordinate2D(latitude: currentLat! + metersCordN, longitude: currentLong! + metersCordN)
+        } else if randomPM == 1 {
+            return CLLocationCoordinate2D(latitude: currentLat! - metersCordN, longitude: currentLong! - metersCordN)
+        }else if randomPM == 2 {
+            return CLLocationCoordinate2D(latitude: currentLat! + metersCordN, longitude: currentLong! - metersCordN)
+        }else if randomPM == 3 {
+            return CLLocationCoordinate2D(latitude: currentLat! - metersCordN, longitude: currentLong! + metersCordN)
+        }else if randomPM == 4 {
+            return CLLocationCoordinate2D(latitude: currentLat!, longitude: currentLong! - metersCordN)
+        }else {
+            return CLLocationCoordinate2D(latitude: currentLat! - metersCordN, longitude: currentLong!)
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
             print("Error - locationManager: \(error.localizedDescription)")
-        }
+    }
 
     func openGoogleMap() {
-        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: 48.9232, longitude: 24.7381), addressDictionary: nil))
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: pin.coordinate.latitude, longitude: pin.coordinate.longitude), addressDictionary: nil))
         mapItem.name = beer.name
         mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
     }
-
 }
-

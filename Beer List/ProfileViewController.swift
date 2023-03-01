@@ -21,7 +21,6 @@ class ProfileViewController: UIViewController {
     var instagramApi = InstagramApi.shared
     var testUserData = InstagramTestUser(access_token: "", user_id: 0)
     var instagramUser: InstagramUser?
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +31,6 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getUser()
-        
     }
    
     
@@ -61,7 +59,7 @@ class ProfileViewController: UIViewController {
     
     @IBAction func tapInstagramButton(_ sender: Any) {
         let storyboard = UIStoryboard(name: Storyboards.main.rawValue, bundle: Bundle.main)
-        let vc = storyboard.instantiateViewController(withIdentifier: ViewControllers.webView.rawValue) as! WebViewController
+        let vc = storyboard.instantiateViewController(withIdentifier: ViewControllers.instagram.rawValue) as! InstagramViewController
         vc.instagramApi = InstagramApi.shared
         vc.mainVC = self
         self.present(vc, animated:true)

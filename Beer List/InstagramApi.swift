@@ -149,11 +149,10 @@ class InstagramApi {
         let session = URLSession.shared
         let task = session.dataTask(with: request, completionHandler: { data, response, error in
             if let response = response {
-                //print(response)
+                print(response)
             }
             do {
                 let jsonData = try JSONDecoder().decode(Feed.self, from: data!)
-                //print(jsonData)
                 completion(jsonData)
             } catch let error as NSError {
                 print(error)
@@ -162,9 +161,9 @@ class InstagramApi {
         task.resume()
     }
     
-    func getMedia(testUserData: InstagramTestUser, completion: @escaping (InstagramMedia) -> Void) {
+    func getMedia(testUserData: InstagramTestUser, index: Int, completion: @escaping (InstagramMedia) -> Void) {
         getMediaData(testUserData: testUserData) { (mediaFeed) in
-            let urlString = "\(BaseURL.graphApi.rawValue + mediaFeed.data[0].id)?fields=id,media_type,media_url,username,timestamp&access_token=\(testUserData.access_token)"
+            let urlString = "\(BaseURL.graphApi.rawValue + mediaFeed.data[index].id)?fields=id,media_type,media_url,username,timestamp&access_token=\(testUserData.access_token)"
             let request = URLRequest(url: URL(string: urlString)!)
             let session = URLSession.shared
             let task = session.dataTask(with: request, completionHandler: { data, response, error in
@@ -173,7 +172,6 @@ class InstagramApi {
                 }
                 do {
                     let jsonData = try JSONDecoder().decode(InstagramMedia.self, from: data!)
-                    print(jsonData)
                     completion(jsonData)
                 } catch let error as NSError {
                     print(error)

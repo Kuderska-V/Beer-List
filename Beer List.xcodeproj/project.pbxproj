@@ -12,7 +12,7 @@
 		69301515294FA82300B2513A /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 69301514294FA82300B2513A /* FacebookLogin */; };
 		69301517294FA82300B2513A /* FacebookShare in Frameworks */ = {isa = PBXBuildFile; productRef = 69301516294FA82300B2513A /* FacebookShare */; };
 		695E8E472989505400BB0EDD /* InstagramApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695E8E462989505400BB0EDD /* InstagramApi.swift */; };
-		695E8E492989516900BB0EDD /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695E8E482989516900BB0EDD /* WebViewController.swift */; };
+		695E8E492989516900BB0EDD /* InstagramViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695E8E482989516900BB0EDD /* InstagramViewController.swift */; };
 		6985019C2908133E00B4514A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6985019B2908133E00B4514A /* ProfileViewController.swift */; };
 		6985019E2909570A00B4514A /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6985019D2909570A00B4514A /* EditViewController.swift */; };
 		698501A02909591900B4514A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6985019F2909591900B4514A /* ViewController.swift */; };
@@ -39,11 +39,12 @@
 /* Begin PBXFileReference section */
 		6930150E294F94CC00B2513A /* Beer List.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Beer List.entitlements"; sourceTree = "<group>"; };
 		695E8E462989505400BB0EDD /* InstagramApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramApi.swift; sourceTree = "<group>"; };
-		695E8E482989516900BB0EDD /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		695E8E482989516900BB0EDD /* InstagramViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramViewController.swift; sourceTree = "<group>"; };
 		6985019B2908133E00B4514A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		6985019D2909570A00B4514A /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		6985019F2909591900B4514A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		69C107E828A271220098ED04 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
+		69C192BA29AB70C200576C48 /* Krakow.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Krakow.gpx; sourceTree = "<group>"; };
 		69DF36D128E5A572000F48BD /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		69DF36D328E9F413000F48BD /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		69E1680C28849C0B00FB5ACE /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
@@ -88,6 +89,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		69C192BB29AB7A0000576C48 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				69C192BA29AB70C200576C48 /* Krakow.gpx */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
 		69EC12C92879C92500C7D947 = {
 			isa = PBXGroup;
 			children = (
@@ -123,7 +132,8 @@
 				6985019B2908133E00B4514A /* ProfileViewController.swift */,
 				6985019D2909570A00B4514A /* EditViewController.swift */,
 				695E8E462989505400BB0EDD /* InstagramApi.swift */,
-				695E8E482989516900BB0EDD /* WebViewController.swift */,
+				695E8E482989516900BB0EDD /* InstagramViewController.swift */,
+				69C192BB29AB7A0000576C48 /* Location */,
 				69BB62DD287EA9C400FC41A5 /* Model */,
 				69EC12DB2879C92500C7D947 /* Main.storyboard */,
 				69EC12DE2879C92800C7D947 /* Assets.xcassets */,
@@ -218,7 +228,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				695E8E492989516900BB0EDD /* WebViewController.swift in Sources */,
+				695E8E492989516900BB0EDD /* InstagramViewController.swift in Sources */,
 				69DF36D428E9F413000F48BD /* LoginViewController.swift in Sources */,
 				69EC12F02879D2CA00C7D947 /* Model.swift in Sources */,
 				69EC12D62879C92500C7D947 /* AppDelegate.swift in Sources */,
@@ -390,6 +400,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -421,6 +432,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
